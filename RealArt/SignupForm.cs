@@ -22,20 +22,24 @@ namespace RealArt
             if (CheckInfoIsGiven(username, password, checkedRole))
             {
                 string json;
+                string path;
+
                 password = HashPassword(password);
 
                 if (OrganisationRadio.Checked)
                 {
                     Organisation organisation = new Organisation(username, password);
-                    json = JsonSerializer.Serialize(organisation);
+                    json = JsonSerializer.Serialize(organisation); 
+                    path = ConfigurationManager.AppSettings["PathToOrganisationsData"];
                 }
                 else
                 {
                     Person person = new Person(username, password);
                     json = JsonSerializer.Serialize(person);
+                    path = ConfigurationManager.AppSettings["PathToArtistsData"];
                 }
 
-                File.AppendAllText(ConfigurationManager.AppSettings["PathToArtistsData"], json + '\n');
+                File.AppendAllText(path, json + '\n');
             }
 
             else
