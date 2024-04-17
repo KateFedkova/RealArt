@@ -1,5 +1,4 @@
 using System.Configuration;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using RealArt.Models;
@@ -11,6 +10,20 @@ namespace RealArt
         public SignUpForm()
         {
             InitializeComponent();
+        }
+
+        private void ToLogin_Click(object sender, EventArgs e)
+        {
+            LoginForm login = new LoginForm();
+            login.Show();
+            this.Hide();
+        }
+
+        private void ToMain_Click(object sender, EventArgs e)
+        { 
+            MainForm main = new MainForm();
+            main.Show();
+            this.Hide();
         }
 
         private void SignupButton_Click(object sender, EventArgs e)
@@ -29,7 +42,7 @@ namespace RealArt
                 if (OrganisationRadio.Checked)
                 {
                     Organisation organisation = new Organisation(username, password);
-                    json = JsonSerializer.Serialize(organisation); 
+                    json = JsonSerializer.Serialize(organisation);
                     path = ConfigurationManager.AppSettings["PathToOrganisationsData"];
                 }
                 else
@@ -62,6 +75,5 @@ namespace RealArt
             string passwordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(password, 13);
             return passwordHash;
         }
-
     }
 }

@@ -47,10 +47,6 @@
             panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // backgroundWorker1
-            // 
-            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-            // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(54, 173, 164);
@@ -79,6 +75,7 @@
             ToLogin.TabIndex = 5;
             ToLogin.Text = "Увійти";
             ToLogin.UseVisualStyleBackColor = false;
+            ToLogin.Click += ToLogin_Click;
             // 
             // ToMain
             // 
@@ -92,7 +89,7 @@
             ToMain.TabIndex = 4;
             ToMain.Text = "Головна";
             ToMain.UseVisualStyleBackColor = false;
-            ToMain.Click += button1_Click_1;
+            ToMain.Click += ToMain_Click;
             // 
             // label3
             // 
@@ -157,12 +154,11 @@
             NameArea.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
             NameArea.ForeColor = Color.Black;
             NameArea.Location = new Point(523, 172);
-            NameArea.MaxLength = 128;
+            NameArea.MaxLength = 80;
             NameArea.Name = "NameArea";
             NameArea.PlaceholderText = "Введіть ім'я";
             NameArea.Size = new Size(484, 37);
             NameArea.TabIndex = 5;
-            NameArea.TextChanged += textBox2_TextChanged;
             // 
             // PasswordArea
             // 
@@ -211,7 +207,6 @@
             СollectorRadio.TabStop = true;
             СollectorRadio.Text = "колекціонер";
             СollectorRadio.UseVisualStyleBackColor = true;
-            СollectorRadio.CheckedChanged += radioButton2_CheckedChanged;
             // 
             // OrganisationRadio
             // 
@@ -237,6 +232,7 @@
             SignupButton.TabIndex = 12;
             SignupButton.Text = "Зареєструватися";
             SignupButton.UseVisualStyleBackColor = false;
+            SignupButton.Click += SignupButton_Click;
             // 
             // SignUpForm
             // 
@@ -257,8 +253,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "SignUpForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
-            Load += Form1_Load;
+            Text = "SignUp";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
