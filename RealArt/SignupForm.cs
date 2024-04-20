@@ -1,5 +1,4 @@
 using System.Configuration;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using RealArt.Models;
@@ -17,14 +16,14 @@ namespace RealArt
         {
             LoginForm login = new LoginForm();
             login.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void ToMain_Click(object sender, EventArgs e)
         {
             MainForm main = new MainForm();
             main.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void SignupButton_Click(object sender, EventArgs e)

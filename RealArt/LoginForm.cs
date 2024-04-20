@@ -19,21 +19,21 @@ namespace RealArt
 
         private void ToSignup_Click(object sender, EventArgs e)
         {
-            SignUpForm signup = new SignUpForm(); 
+            SignUpForm signup = new SignUpForm();
             signup.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void ToMain_Click(object sender, EventArgs e)
         {
             MainForm main = new MainForm();
             main.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
-           
+        
         }
     }
 }
