@@ -44,6 +44,7 @@
             СollectorRadio = new RadioButton();
             OrganisationRadio = new RadioButton();
             SignupButton = new Button();
+            MuseumRadio = new RadioButton();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -176,7 +177,7 @@
             // 
             ArtistRadio.AutoSize = true;
             ArtistRadio.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            ArtistRadio.Location = new Point(632, 351);
+            ArtistRadio.Location = new Point(632, 353);
             ArtistRadio.Name = "ArtistRadio";
             ArtistRadio.Size = new Size(128, 32);
             ArtistRadio.TabIndex = 7;
@@ -190,7 +191,7 @@
             label6.BackColor = Color.Transparent;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label6.ForeColor = Color.FromArgb(54, 173, 164);
-            label6.Location = new Point(523, 404);
+            label6.Location = new Point(523, 432);
             label6.Name = "label6";
             label6.Size = new Size(73, 32);
             label6.TabIndex = 8;
@@ -200,7 +201,7 @@
             // 
             СollectorRadio.AutoSize = true;
             СollectorRadio.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            СollectorRadio.Location = new Point(632, 405);
+            СollectorRadio.Location = new Point(632, 407);
             СollectorRadio.Name = "СollectorRadio";
             СollectorRadio.Size = new Size(153, 32);
             СollectorRadio.TabIndex = 9;
@@ -212,7 +213,7 @@
             // 
             OrganisationRadio.AutoSize = true;
             OrganisationRadio.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            OrganisationRadio.Location = new Point(632, 462);
+            OrganisationRadio.Location = new Point(632, 515);
             OrganisationRadio.Name = "OrganisationRadio";
             OrganisationRadio.Size = new Size(142, 32);
             OrganisationRadio.TabIndex = 10;
@@ -226,7 +227,7 @@
             SignupButton.FlatStyle = FlatStyle.Flat;
             SignupButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             SignupButton.ForeColor = Color.White;
-            SignupButton.Location = new Point(632, 549);
+            SignupButton.Location = new Point(633, 588);
             SignupButton.Name = "SignupButton";
             SignupButton.Size = new Size(244, 53);
             SignupButton.TabIndex = 12;
@@ -234,12 +235,25 @@
             SignupButton.UseVisualStyleBackColor = false;
             SignupButton.Click += SignupButton_Click;
             // 
+            // MuseumRadio
+            // 
+            MuseumRadio.AutoSize = true;
+            MuseumRadio.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            MuseumRadio.Location = new Point(632, 463);
+            MuseumRadio.Name = "MuseumRadio";
+            MuseumRadio.Size = new Size(97, 32);
+            MuseumRadio.TabIndex = 13;
+            MuseumRadio.TabStop = true;
+            MuseumRadio.Text = "музей ";
+            MuseumRadio.UseVisualStyleBackColor = true;
+            // 
             // SignUpForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1068, 741);
+            Controls.Add(MuseumRadio);
             Controls.Add(SignupButton);
             Controls.Add(OrganisationRadio);
             Controls.Add(СollectorRadio);
@@ -278,5 +292,6 @@
         private RadioButton СollectorRadio;
         private RadioButton OrganisationRadio;
         private Button SignupButton;
+        private RadioButton MuseumRadio;
     }
 }
