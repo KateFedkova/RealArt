@@ -1,5 +1,4 @@
 using System.Configuration;
-using System.Text;
 using System.Text.Json;
 using RealArt.Models;
 
@@ -30,7 +29,7 @@ namespace RealArt
         {
             string username = NameArea.Text;
             string password = PasswordArea.Text;
-            bool checkedRole = ArtistRadio.Checked || —ollectorRadio.Checked || MuseumRadio.Checked || OrganisationRadio.Checked;
+            string checkedRole = GetSelectedRole();
 
             if (CheckInfoIsGiven(username, password, checkedRole))
             {
@@ -39,32 +38,16 @@ namespace RealArt
 
                 password = HashPassword(password);
 
-                if (ArtistRadio.Checked && !CheckUsernameIsUsed(username, "Artists"))
+                if (!CheckUsernameIsUsed(username, checkedRole))
                 {
-                    Person person = new Person(username, password);
-                    json = JsonSerializer.Serialize(person);
-                    path = ConfigurationManager.AppSettings["PathToArtistsData"];
-                }
+                    var user = CreatePersonOrOrganisation(username, password, checkedRole);
 
-                else if (—ollectorRadio.Checked && !CheckUsernameIsUsed(username, "—ollectors"))
-                {
-                    Person person = new Person(username, password);
-                    json = JsonSerializer.Serialize(person);
-                    path = ConfigurationManager.AppSettings["PathTo—ollectorsData"];
-                }
-
-                else if (MuseumRadio.Checked && !CheckUsernameIsUsed(username, "Museums"))
-                {
-                    Organisation organisation = new Organisation(username, password);
-                    json = JsonSerializer.Serialize(organisation);
-                    path = ConfigurationManager.AppSettings["PathToMuseumsData"];
-                }
-
-                else if (OrganisationRadio.Checked && !CheckUsernameIsUsed(username, "Organisations"))
-                {
-                    Organisation organisation = new Organisation(username, password);
-                    json = JsonSerializer.Serialize(organisation);
-                    path = ConfigurationManager.AppSettings["PathToOrganisationsData"];
+                    if (user != null)
+                    {
+                        json = JsonSerializer.Serialize(user);
+                        path = GetPathForRole(checkedRole);
+                        File.AppendAllText(path, json + '\n');
+                    }
                 }
 
                 else
@@ -72,8 +55,6 @@ namespace RealArt
                     MessageBox.Show("¡Û‰¸ Î‡ÒÍ‡ Ó·Â≥Ú¸ ≥Ì¯ËÈ username");
                     return;
                 }
-
-                File.AppendAllText(path, json + '\n');
             }
 
             else
@@ -82,22 +63,27 @@ namespace RealArt
             }
         }
 
-        private bool CheckInfoIsGiven(string username, string password, bool checkedRole)
+        private bool CheckInfoIsGiven(string username, string password, string checkedRole)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || !checkedRole)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(checkedRole))
             {
                 return false;
             }
             return true;
         }
 
+        private string? GetSelectedRole()
+        {
+            if (ArtistRadio.Checked) return "Artists";
+            else if (—ollectorRadio.Checked) return "—ollectors";
+            else if (MuseumRadio.Checked) return "Museums";
+            else if (OrganisationRadio.Checked) return "Organisations";
+            return null;
+        }
+
         private bool CheckUsernameIsUsed(string username, string role)
         {
-            string? data = ConfigurationManager.AppSettings["PathTo" + role + "Data"];
-         
-            string jsonData = File.ReadAllText(data);
-            
-            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            string[] jsonLines = ReadFile(role);
 
             foreach (string jsonLine in jsonLines)
             {
@@ -115,6 +101,49 @@ namespace RealArt
             }
 
             return false;
+        }
+
+        private string[] ReadFile(string role)
+        {
+            string? data = ConfigurationManager.AppSettings["PathTo" + role + "Data"];
+
+            string jsonData = File.ReadAllText(data);
+
+            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            
+            return jsonLines;
+        }
+
+        private object? CreatePersonOrOrganisation(string username, string password, string role)
+        {
+            switch (role)
+            {
+                case "Artists":
+                case "—ollectors":
+                    return new Person(username, password);
+                case "Museums":
+                case "Organisations":
+                    return new Organisation(username, password);
+                default:
+                    return null;
+            }
+        }
+
+        private string? GetPathForRole(string role)
+        {
+            switch (role)
+            {
+                case "Artists":
+                    return ConfigurationManager.AppSettings["PathToArtistsData"];
+                case "—ollectors":
+                    return ConfigurationManager.AppSettings["PathTo—ollectorsData"];
+                case "Museums":
+                    return ConfigurationManager.AppSettings["PathToMuseumsData"];
+                case "Organisations":
+                    return ConfigurationManager.AppSettings["PathToOrganisationsData"];
+                default:
+                    return null;
+            }
         }
 
         private string HashPassword(string password)
