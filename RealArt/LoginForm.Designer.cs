@@ -167,6 +167,7 @@
             LoginButton.TabIndex = 13;
             LoginButton.Text = "Увійти";
             LoginButton.UseVisualStyleBackColor = false;
+            LoginButton.Click += LoginButton_Click;
             // 
             // LoginForm
             // 
