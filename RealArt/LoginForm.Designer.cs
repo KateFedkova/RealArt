@@ -38,7 +38,9 @@
             NameArea = new TextBox();
             PasswordArea = new TextBox();
             LoginButton = new Button();
+            panel2 = new Panel();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -55,7 +57,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(452, 741);
-            panel1.TabIndex = 1;
+            panel1.TabIndex = 0;
             // 
             // ToSignup
             // 
@@ -126,33 +128,33 @@
             label5.BackColor = Color.Transparent;
             label5.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 204);
             label5.ForeColor = Color.FromArgb(54, 173, 164);
-            label5.Location = new Point(638, 172);
+            label5.Location = new Point(191, 146);
             label5.Name = "label5";
             label5.Size = new Size(229, 38);
-            label5.TabIndex = 4;
+            label5.TabIndex = 7;
             label5.Text = "Увійти в акаунт";
             // 
             // NameArea
             // 
             NameArea.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
             NameArea.ForeColor = Color.Black;
-            NameArea.Location = new Point(529, 273);
+            NameArea.Location = new Point(78, 257);
             NameArea.MaxLength = 80;
             NameArea.Name = "NameArea";
             NameArea.PlaceholderText = "Введіть ім'я";
             NameArea.Size = new Size(484, 37);
-            NameArea.TabIndex = 6;
+            NameArea.TabIndex = 8;
             // 
             // PasswordArea
             // 
             PasswordArea.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
             PasswordArea.ForeColor = Color.Black;
-            PasswordArea.Location = new Point(529, 391);
+            PasswordArea.Location = new Point(78, 373);
             PasswordArea.MaxLength = 128;
             PasswordArea.Name = "PasswordArea";
             PasswordArea.PlaceholderText = "Введіть пароль";
             PasswordArea.Size = new Size(484, 37);
-            PasswordArea.TabIndex = 7;
+            PasswordArea.TabIndex = 9;
             PasswordArea.UseSystemPasswordChar = true;
             // 
             // LoginButton
@@ -161,13 +163,24 @@
             LoginButton.FlatStyle = FlatStyle.Flat;
             LoginButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             LoginButton.ForeColor = Color.White;
-            LoginButton.Location = new Point(686, 517);
+            LoginButton.Location = new Point(229, 517);
             LoginButton.Name = "LoginButton";
             LoginButton.Size = new Size(135, 53);
-            LoginButton.TabIndex = 13;
+            LoginButton.TabIndex = 10;
             LoginButton.Text = "Увійти";
             LoginButton.UseVisualStyleBackColor = false;
             LoginButton.Click += LoginButton_Click;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(label5);
+            panel2.Controls.Add(LoginButton);
+            panel2.Controls.Add(NameArea);
+            panel2.Controls.Add(PasswordArea);
+            panel2.Location = new Point(450, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(618, 737);
+            panel2.TabIndex = 6;
             // 
             // LoginForm
             // 
@@ -175,10 +188,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1068, 741);
-            Controls.Add(LoginButton);
-            Controls.Add(PasswordArea);
-            Controls.Add(NameArea);
-            Controls.Add(label5);
+            Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "LoginForm";
@@ -186,8 +196,9 @@
             Text = "LoginForm";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -202,5 +213,6 @@
         private TextBox NameArea;
         private TextBox PasswordArea;
         private Button LoginButton;
+        private Panel panel2;
     }
 }
