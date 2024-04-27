@@ -15,9 +15,18 @@ namespace RealArt
 {
     public partial class PrivatePageForm : Form
     {
-        public PrivatePageForm()
+        private MainForm main;
+
+        public PrivatePageForm(MainForm main)
         {
             InitializeComponent();
+            this.main = main;
+        }
+        
+        private void ToMain_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            this.main.Show();
         }
 
         private void PrivatePageForm_Load(object sender, EventArgs e)
@@ -100,5 +109,7 @@ namespace RealArt
             Binding binding = new Binding("ImageLocation", dataSource, propertyName);
             pictureBox.DataBindings.Add(binding);
         }
+
+        
     }
 }
