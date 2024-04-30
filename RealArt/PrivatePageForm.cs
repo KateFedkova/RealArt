@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using Microsoft.VisualBasic.ApplicationServices;
 using RealArt.Models;
 
 namespace RealArt
@@ -22,7 +23,7 @@ namespace RealArt
             InitializeComponent();
             this.main = main;
         }
-        
+
         private void ToMain_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -32,7 +33,6 @@ namespace RealArt
         private void PrivatePageForm_Load(object sender, EventArgs e)
         {
             BindingSource bindingSource = new BindingSource();
-
             if (CurrentUser.Info is Person person)
             {
                 PersonElementsVisibility();
@@ -60,7 +60,7 @@ namespace RealArt
             BindLabel(CountryInfoLabel, source, "Country");
             BindLabel(StyleInfoLabel, source, "Style");
             BindTextbox(AboutInfoTextbox, source, "About");
-            BindImage(UserPicturebox, source, "Foto");
+            BindImage(UserPicturebox, source, "Photo");
         }
 
         private void OrganisationElementsVisibility()
@@ -81,7 +81,7 @@ namespace RealArt
             BindLabel(AddressInfoLabel, source, "Address");
             BindLabel(WorkingTimeInfoLabel, source, "Time");
             BindTextbox(AboutInfoTextbox, source, "About");
-            BindImage(UserPicturebox, source, "Foto");
+            BindImage(UserPicturebox, source, "Photo");
         }
 
         private void BindLabel(Label label, object source, string property)
@@ -110,6 +110,89 @@ namespace RealArt
             pictureBox.DataBindings.Add(binding);
         }
 
-        
+        private void AddPhotoButton_Click(object sender, EventArgs e)
+        {
+            string fileName = SetImage();
+
+            if (fileName != null)
+            {
+                string role = CurrentUser.Role;
+                string[] jsonLines = ReadFile(role);
+                List<User> users = new List<User>();
+
+                foreach (string userString in jsonLines)
+                {
+                    User user = null;
+
+                    if (role == "Artist" || role == "Collector")
+                    {
+                        user = JsonSerializer.Deserialize<Person?>(userString);
+                    }
+
+                    else if (role == "Museum" || role == "Organisation")
+                    {
+                        user = JsonSerializer.Deserialize<Organisation?>(userString);
+                    }
+
+                    if (user?.Id == CurrentUser.Info.Id)
+                    {
+                        user.Photo = fileName;
+                    }
+                    
+                    users.Add(user);
+                }
+
+                UpdateInfoInFiles(role, users);
+            }
+        }
+
+        private string SetImage()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Image Files (*.jpg, *.png)|*.jpg;*.png";
+            string fileName = "";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                fileName = dialog.FileName; 
+                UserPicturebox.ImageLocation = fileName;
+            }
+            
+            return fileName;
+        }
+   
+        private string[] ReadFile(string role)
+        {
+            string? data = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
+
+            string jsonData = File.ReadAllText(data);
+
+            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+            return jsonLines;
+        }
+
+        private void UpdateInfoInFiles(string role, List<User> users)
+        {
+            string? filePath = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
+            File.WriteAllText(filePath, string.Empty);
+
+            foreach (User user in users)
+            {
+                string updatedJson = "";
+
+                if (role == "Artist" || role == "Collector")
+                {
+                    updatedJson = JsonSerializer.Serialize((Person)user);
+                }
+
+                else if (role == "Museum" || role == "Organisation")
+                {
+                    updatedJson = JsonSerializer.Serialize((Organisation)user);
+                }
+
+                File.AppendAllText(filePath, updatedJson + '\n');
+            }
+        }
     }
 }
