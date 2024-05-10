@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            roundButton2 = new AdditionalElements.RoundButton();
-            roundButton1 = new AdditionalElements.RoundButton();
+            CancelButton = new AdditionalElements.RoundButton();
+            OkButton = new AdditionalElements.RoundButton();
             ClosingTimePicker = new DateTimePicker();
             AddressTextbox = new TextBox();
             StyleTextbox = new TextBox();
@@ -50,8 +50,8 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Control;
-            panel1.Controls.Add(roundButton2);
-            panel1.Controls.Add(roundButton1);
+            panel1.Controls.Add(CancelButton);
+            panel1.Controls.Add(OkButton);
             panel1.Controls.Add(ClosingTimePicker);
             panel1.Controls.Add(AddressTextbox);
             panel1.Controls.Add(StyleTextbox);
@@ -65,66 +65,68 @@
             panel1.Controls.Add(StyleLabel);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(-10, -14);
+            panel1.Location = new Point(-10, -11);
             panel1.Name = "panel1";
-            panel1.Size = new Size(849, 707);
+            panel1.Size = new Size(849, 704);
             panel1.TabIndex = 0;
             // 
-            // roundButton2
+            // CancelButton
             // 
-            roundButton2.BackColor = Color.MediumSlateBlue;
-            roundButton2.BackgroundColor = Color.MediumSlateBlue;
-            roundButton2.BorderColor = Color.Red;
-            roundButton2.BorderRadius = 20;
-            roundButton2.BorderSize = 0;
-            roundButton2.FlatAppearance.BorderSize = 0;
-            roundButton2.FlatStyle = FlatStyle.Flat;
-            roundButton2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            roundButton2.ForeColor = Color.White;
-            roundButton2.Location = new Point(597, 599);
-            roundButton2.Name = "roundButton2";
-            roundButton2.Size = new Size(180, 55);
-            roundButton2.TabIndex = 15;
-            roundButton2.Text = "Не змінювати";
-            roundButton2.TextColor = Color.White;
-            roundButton2.UseVisualStyleBackColor = false;
+            CancelButton.BackColor = Color.MediumSlateBlue;
+            CancelButton.BackgroundColor = Color.MediumSlateBlue;
+            CancelButton.BorderColor = Color.Red;
+            CancelButton.BorderRadius = 20;
+            CancelButton.BorderSize = 0;
+            CancelButton.DialogResult = DialogResult.Cancel;
+            CancelButton.FlatAppearance.BorderSize = 0;
+            CancelButton.FlatStyle = FlatStyle.Flat;
+            CancelButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            CancelButton.ForeColor = Color.White;
+            CancelButton.Location = new Point(597, 599);
+            CancelButton.Name = "CancelButton";
+            CancelButton.Size = new Size(180, 55);
+            CancelButton.TabIndex = 15;
+            CancelButton.Text = "Не змінювати";
+            CancelButton.TextColor = Color.White;
+            CancelButton.UseVisualStyleBackColor = false;
             // 
-            // roundButton1
+            // OkButton
             // 
-            roundButton1.BackColor = Color.MediumSlateBlue;
-            roundButton1.BackgroundColor = Color.MediumSlateBlue;
-            roundButton1.BorderColor = Color.Red;
-            roundButton1.BorderRadius = 20;
-            roundButton1.BorderSize = 0;
-            roundButton1.FlatAppearance.BorderSize = 0;
-            roundButton1.FlatStyle = FlatStyle.Flat;
-            roundButton1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            roundButton1.ForeColor = Color.White;
-            roundButton1.Location = new Point(455, 599);
-            roundButton1.Name = "roundButton1";
-            roundButton1.Size = new Size(105, 55);
-            roundButton1.TabIndex = 14;
-            roundButton1.Text = "OK";
-            roundButton1.TextColor = Color.White;
-            roundButton1.UseVisualStyleBackColor = false;
+            OkButton.BackColor = Color.MediumSlateBlue;
+            OkButton.BackgroundColor = Color.MediumSlateBlue;
+            OkButton.BorderColor = Color.Red;
+            OkButton.BorderRadius = 20;
+            OkButton.BorderSize = 0;
+            OkButton.DialogResult = DialogResult.OK;
+            OkButton.FlatAppearance.BorderSize = 0;
+            OkButton.FlatStyle = FlatStyle.Flat;
+            OkButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            OkButton.ForeColor = Color.White;
+            OkButton.Location = new Point(455, 599);
+            OkButton.Name = "OkButton";
+            OkButton.Size = new Size(105, 55);
+            OkButton.TabIndex = 14;
+            OkButton.Text = "OK";
+            OkButton.TextColor = Color.White;
+            OkButton.UseVisualStyleBackColor = false;
             // 
             // ClosingTimePicker
             // 
             ClosingTimePicker.Format = DateTimePickerFormat.Time;
-            ClosingTimePicker.Location = new Point(52, 566);
+            ClosingTimePicker.Location = new Point(455, 478);
             ClosingTimePicker.Name = "ClosingTimePicker";
             ClosingTimePicker.ShowUpDown = true;
             ClosingTimePicker.Size = new Size(300, 31);
-            ClosingTimePicker.TabIndex = 9;
+            ClosingTimePicker.TabIndex = 11;
             // 
             // AddressTextbox
             // 
-            AddressTextbox.Location = new Point(455, 384);
+            AddressTextbox.Location = new Point(52, 456);
             AddressTextbox.MaxLength = 120;
             AddressTextbox.Multiline = true;
             AddressTextbox.Name = "AddressTextbox";
             AddressTextbox.Size = new Size(322, 117);
-            AddressTextbox.TabIndex = 13;
+            AddressTextbox.TabIndex = 7;
             // 
             // StyleTextbox
             // 
@@ -142,7 +144,7 @@
             AboutTextbox.Multiline = true;
             AboutTextbox.Name = "AboutTextbox";
             AboutTextbox.Size = new Size(322, 117);
-            AboutTextbox.TabIndex = 11;
+            AboutTextbox.TabIndex = 13;
             // 
             // label7
             // 
@@ -157,17 +159,16 @@
             // OpeningTimePicker
             // 
             OpeningTimePicker.Format = DateTimePickerFormat.Time;
-            OpeningTimePicker.Location = new Point(52, 444);
+            OpeningTimePicker.Location = new Point(455, 369);
             OpeningTimePicker.Name = "OpeningTimePicker";
             OpeningTimePicker.ShowUpDown = true;
             OpeningTimePicker.Size = new Size(300, 31);
-            OpeningTimePicker.TabIndex = 7;
+            OpeningTimePicker.TabIndex = 9;
             // 
             // CoutryChooser
             // 
             CoutryChooser.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             CoutryChooser.FormattingEnabled = true;
-            CoutryChooser.Items.AddRange(new object[] { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "The Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Republic of the Costa Rica", "Côte d’Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "The Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "North Korea", "South Korea", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Federated States of Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Sudan, South", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" });
             CoutryChooser.Location = new Point(52, 170);
             CoutryChooser.Name = "CoutryChooser";
             CoutryChooser.Size = new Size(322, 36);
@@ -177,30 +178,30 @@
             // 
             ClosingLabel.AutoSize = true;
             ClosingLabel.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            ClosingLabel.Location = new Point(52, 510);
+            ClosingLabel.Location = new Point(455, 428);
             ClosingLabel.Name = "ClosingLabel";
             ClosingLabel.Size = new Size(133, 30);
-            ClosingLabel.TabIndex = 8;
+            ClosingLabel.TabIndex = 10;
             ClosingLabel.Text = "Closing time";
             // 
             // OpeningLabel
             // 
             OpeningLabel.AutoSize = true;
             OpeningLabel.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            OpeningLabel.Location = new Point(52, 394);
+            OpeningLabel.Location = new Point(455, 325);
             OpeningLabel.Name = "OpeningLabel";
             OpeningLabel.Size = new Size(146, 30);
-            OpeningLabel.TabIndex = 6;
+            OpeningLabel.TabIndex = 8;
             OpeningLabel.Text = "Opening time";
             // 
             // AddressLabel
             // 
             AddressLabel.AutoSize = true;
             AddressLabel.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            AddressLabel.Location = new Point(455, 329);
+            AddressLabel.Location = new Point(52, 397);
             AddressLabel.Name = "AddressLabel";
             AddressLabel.Size = new Size(91, 30);
-            AddressLabel.TabIndex = 12;
+            AddressLabel.TabIndex = 6;
             AddressLabel.Text = "Address";
             // 
             // StyleLabel
@@ -220,7 +221,7 @@
             label2.Location = new Point(455, 116);
             label2.Name = "label2";
             label2.Size = new Size(72, 30);
-            label2.TabIndex = 10;
+            label2.TabIndex = 12;
             label2.Text = "About";
             // 
             // label1
@@ -245,6 +246,7 @@
             Name = "UpdateInfoForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
+            Load += UpdateInfoForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -266,7 +268,7 @@
         private TextBox AddressTextbox;
         private TextBox StyleTextbox;
         private DateTimePicker ClosingTimePicker;
-        private AdditionalElements.RoundButton roundButton1;
-        private AdditionalElements.RoundButton roundButton2;
+        private AdditionalElements.RoundButton OkButton;
+        private AdditionalElements.RoundButton CancelButton;
     }
 }
