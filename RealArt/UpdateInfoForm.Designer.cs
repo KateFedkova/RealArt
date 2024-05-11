@@ -37,7 +37,7 @@
             AboutTextbox = new TextBox();
             label7 = new Label();
             OpeningTimePicker = new DateTimePicker();
-            CoutryChooser = new ComboBox();
+            CountryChooser = new ComboBox();
             ClosingLabel = new Label();
             OpeningLabel = new Label();
             AddressLabel = new Label();
@@ -58,7 +58,7 @@
             panel1.Controls.Add(AboutTextbox);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(OpeningTimePicker);
-            panel1.Controls.Add(CoutryChooser);
+            panel1.Controls.Add(CountryChooser);
             panel1.Controls.Add(ClosingLabel);
             panel1.Controls.Add(OpeningLabel);
             panel1.Controls.Add(AddressLabel);
@@ -109,6 +109,7 @@
             OkButton.Text = "OK";
             OkButton.TextColor = Color.White;
             OkButton.UseVisualStyleBackColor = false;
+            OkButton.Click += OkButton_Click;
             // 
             // ClosingTimePicker
             // 
@@ -165,14 +166,15 @@
             OpeningTimePicker.Size = new Size(300, 31);
             OpeningTimePicker.TabIndex = 9;
             // 
-            // CoutryChooser
+            // CountryChooser
             // 
-            CoutryChooser.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            CoutryChooser.FormattingEnabled = true;
-            CoutryChooser.Location = new Point(52, 170);
-            CoutryChooser.Name = "CoutryChooser";
-            CoutryChooser.Size = new Size(322, 36);
-            CoutryChooser.TabIndex = 3;
+            CountryChooser.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            CountryChooser.FormattingEnabled = true;
+            CountryChooser.Items.AddRange(new object[] { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "The Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, ", "Democratic Republic of the Congo, ", "Republic of the Costa Rica", "Côte d’Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "The Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "South Korea", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Federated States of Micronesia, ", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Sudan, South", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" });
+            CountryChooser.Location = new Point(52, 170);
+            CountryChooser.Name = "CountryChooser";
+            CountryChooser.Size = new Size(322, 36);
+            CountryChooser.TabIndex = 3;
             // 
             // ClosingLabel
             // 
@@ -261,7 +263,7 @@
         private Label AddressLabel;
         private Label OpeningLabel;
         private Label ClosingLabel;
-        private ComboBox CoutryChooser;
+        private ComboBox CountryChooser;
         private DateTimePicker OpeningTimePicker;
         private TextBox AboutTextbox;
         private Label label7;
