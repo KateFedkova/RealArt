@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrivatePageForm));
             panel1 = new Panel();
+            ToMain = new PictureBox();
             AboutInfoTextbox = new TextBox();
             WorkingTimeInfoLabel = new Label();
             AddressInfoLabel = new Label();
@@ -44,8 +46,11 @@
             AddPhotoButton = new AdditionalElements.RoundButton();
             UserPicturebox = new PictureBox();
             panel2 = new Panel();
+            paintingsPanel = new TableLayoutPanel();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ToMain).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UserPicturebox).BeginInit();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -53,6 +58,7 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.SeaGreen;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(ToMain);
             panel1.Controls.Add(AboutInfoTextbox);
             panel1.Controls.Add(WorkingTimeInfoLabel);
             panel1.Controls.Add(AddressInfoLabel);
@@ -72,65 +78,76 @@
             panel1.Size = new Size(1079, 237);
             panel1.TabIndex = 0;
             // 
+            // ToMain
+            // 
+            ToMain.Image = (Image)resources.GetObject("ToMain.Image");
+            ToMain.Location = new Point(4, -1);
+            ToMain.Name = "ToMain";
+            ToMain.Size = new Size(30, 30);
+            ToMain.SizeMode = PictureBoxSizeMode.StretchImage;
+            ToMain.TabIndex = 14;
+            ToMain.TabStop = false;
+            ToMain.Click += ToMain_Click;
+            // 
             // AboutInfoTextbox
             // 
             AboutInfoTextbox.BorderStyle = BorderStyle.None;
             AboutInfoTextbox.Enabled = false;
             AboutInfoTextbox.ImeMode = ImeMode.NoControl;
-            AboutInfoTextbox.Location = new Point(463, 74);
+            AboutInfoTextbox.Location = new Point(487, 79);
             AboutInfoTextbox.MaxLength = 120;
             AboutInfoTextbox.Multiline = true;
             AboutInfoTextbox.Name = "AboutInfoTextbox";
             AboutInfoTextbox.ReadOnly = true;
             AboutInfoTextbox.Size = new Size(313, 110);
             AboutInfoTextbox.TabIndex = 10;
-            AboutInfoTextbox.Text = "не відомо";
+            AboutInfoTextbox.Text = "невідомо";
             // 
             // WorkingTimeInfoLabel
             // 
             WorkingTimeInfoLabel.AutoSize = true;
             WorkingTimeInfoLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            WorkingTimeInfoLabel.Location = new Point(326, 165);
+            WorkingTimeInfoLabel.Location = new Point(337, 165);
             WorkingTimeInfoLabel.Name = "WorkingTimeInfoLabel";
-            WorkingTimeInfoLabel.Size = new Size(104, 28);
+            WorkingTimeInfoLabel.Size = new Size(99, 28);
             WorkingTimeInfoLabel.TabIndex = 8;
-            WorkingTimeInfoLabel.Text = "не відомо";
+            WorkingTimeInfoLabel.Text = "невідомо";
             // 
             // AddressInfoLabel
             // 
             AddressInfoLabel.AutoSize = true;
             AddressInfoLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            AddressInfoLabel.Location = new Point(277, 120);
+            AddressInfoLabel.Location = new Point(293, 120);
             AddressInfoLabel.Name = "AddressInfoLabel";
-            AddressInfoLabel.Size = new Size(104, 28);
+            AddressInfoLabel.Size = new Size(99, 28);
             AddressInfoLabel.TabIndex = 6;
-            AddressInfoLabel.Text = "не відомо";
+            AddressInfoLabel.Text = "невідомо";
             // 
             // StyleInfoLabel
             // 
             StyleInfoLabel.AutoSize = true;
             StyleInfoLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            StyleInfoLabel.Location = new Point(278, 79);
+            StyleInfoLabel.Location = new Point(293, 79);
             StyleInfoLabel.Name = "StyleInfoLabel";
-            StyleInfoLabel.Size = new Size(104, 28);
+            StyleInfoLabel.Size = new Size(99, 28);
             StyleInfoLabel.TabIndex = 4;
-            StyleInfoLabel.Text = "не відомо";
+            StyleInfoLabel.Text = "невідомо";
             // 
             // CountryInfoLabel
             // 
             CountryInfoLabel.AutoSize = true;
             CountryInfoLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            CountryInfoLabel.Location = new Point(277, 32);
+            CountryInfoLabel.Location = new Point(293, 32);
             CountryInfoLabel.Name = "CountryInfoLabel";
-            CountryInfoLabel.Size = new Size(104, 28);
+            CountryInfoLabel.Size = new Size(99, 28);
             CountryInfoLabel.TabIndex = 2;
-            CountryInfoLabel.Text = "не відомо";
+            CountryInfoLabel.Text = "невідомо";
             // 
             // WorkingTimeLabel
             // 
             WorkingTimeLabel.AutoSize = true;
             WorkingTimeLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            WorkingTimeLabel.Location = new Point(190, 165);
+            WorkingTimeLabel.Location = new Point(201, 165);
             WorkingTimeLabel.Name = "WorkingTimeLabel";
             WorkingTimeLabel.Size = new Size(130, 28);
             WorkingTimeLabel.TabIndex = 7;
@@ -140,7 +157,7 @@
             // 
             AddressLabel.AutoSize = true;
             AddressLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            AddressLabel.Location = new Point(190, 120);
+            AddressLabel.Location = new Point(201, 120);
             AddressLabel.Name = "AddressLabel";
             AddressLabel.Size = new Size(82, 28);
             AddressLabel.TabIndex = 5;
@@ -150,7 +167,7 @@
             // 
             StyleLabel.AutoSize = true;
             StyleLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            StyleLabel.Location = new Point(190, 79);
+            StyleLabel.Location = new Point(201, 79);
             StyleLabel.Name = "StyleLabel";
             StyleLabel.Size = new Size(82, 28);
             StyleLabel.TabIndex = 3;
@@ -160,7 +177,7 @@
             // 
             AboutLabel.AutoSize = true;
             AboutLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            AboutLabel.Location = new Point(463, 31);
+            AboutLabel.Location = new Point(487, 31);
             AboutLabel.Name = "AboutLabel";
             AboutLabel.Size = new Size(99, 28);
             AboutLabel.TabIndex = 9;
@@ -170,7 +187,7 @@
             // 
             CountryLabel.AutoSize = true;
             CountryLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            CountryLabel.Location = new Point(190, 32);
+            CountryLabel.Location = new Point(201, 32);
             CountryLabel.Name = "CountryLabel";
             CountryLabel.Size = new Size(86, 28);
             CountryLabel.TabIndex = 1;
@@ -188,7 +205,7 @@
             AddButton.FlatStyle = FlatStyle.Flat;
             AddButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             AddButton.ForeColor = Color.Black;
-            AddButton.Location = new Point(853, 165);
+            AddButton.Location = new Point(863, 165);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(190, 55);
             AddButton.TabIndex = 13;
@@ -208,13 +225,14 @@
             UpdateButton.FlatStyle = FlatStyle.Flat;
             UpdateButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             UpdateButton.ForeColor = Color.Black;
-            UpdateButton.Location = new Point(853, 93);
+            UpdateButton.Location = new Point(863, 93);
             UpdateButton.Name = "UpdateButton";
             UpdateButton.Size = new Size(190, 55);
             UpdateButton.TabIndex = 12;
             UpdateButton.Text = "Редагувати";
             UpdateButton.TextColor = Color.Black;
             UpdateButton.UseVisualStyleBackColor = false;
+            UpdateButton.Click += UpdateButton_Click;
             // 
             // AddPhotoButton
             // 
@@ -228,7 +246,7 @@
             AddPhotoButton.FlatStyle = FlatStyle.Flat;
             AddPhotoButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             AddPhotoButton.ForeColor = Color.Black;
-            AddPhotoButton.Location = new Point(853, 18);
+            AddPhotoButton.Location = new Point(863, 18);
             AddPhotoButton.Name = "AddPhotoButton";
             AddPhotoButton.Size = new Size(190, 55);
             AddPhotoButton.TabIndex = 11;
@@ -240,21 +258,37 @@
             // UserPicturebox
             // 
             UserPicturebox.Anchor = AnchorStyles.Left;
-            UserPicturebox.BorderStyle = BorderStyle.FixedSingle;
-            UserPicturebox.Location = new Point(21, 18);
+            UserPicturebox.Location = new Point(52, 18);
             UserPicturebox.Name = "UserPicturebox";
-            UserPicturebox.Size = new Size(148, 202);
+            UserPicturebox.Size = new Size(136, 202);
             UserPicturebox.SizeMode = PictureBoxSizeMode.StretchImage;
             UserPicturebox.TabIndex = 0;
             UserPicturebox.TabStop = false;
             // 
             // panel2
             // 
-            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel2.AutoScroll = true;
+            panel2.Controls.Add(paintingsPanel);
             panel2.Location = new Point(0, 237);
             panel2.Name = "panel2";
             panel2.Size = new Size(1079, 409);
             panel2.TabIndex = 3;
+            // 
+            // paintingsPanel
+            // 
+            paintingsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            paintingsPanel.AutoSize = true;
+            paintingsPanel.ColumnCount = 3;
+            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            paintingsPanel.Location = new Point(82, 43);
+            paintingsPanel.Name = "paintingsPanel";
+            paintingsPanel.RowCount = 1;
+            paintingsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280F));
+            paintingsPanel.Size = new Size(904, 280);
+            paintingsPanel.TabIndex = 1;
             // 
             // PrivatePageForm
             // 
@@ -263,14 +297,19 @@
             ClientSize = new Size(1079, 644);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1101, 700);
             Name = "PrivatePageForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Load += PrivatePageForm_Load;
+            Resize += PrivatePageForm_Resize;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ToMain).EndInit();
             ((System.ComponentModel.ISupportInitialize)UserPicturebox).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -292,5 +331,7 @@
         private Label StyleInfoLabel;
         private TextBox AboutInfoTextbox;
         private Panel panel2;
+        private PictureBox ToMain;
+        private TableLayoutPanel paintingsPanel;
     }
 }

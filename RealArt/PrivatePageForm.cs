@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Configuration;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
 using RealArt.Models;
 
 namespace RealArt
@@ -28,6 +18,25 @@ namespace RealArt
         {
             this.Close();
             this.main.Show();
+        }
+
+        private void PrivatePageForm_Resize(object sender, EventArgs e)
+        {
+            int formWidth = this.ClientSize.Width;
+            int minWidth = this.MinimumSize.Width;
+            int newWidth = Math.Max(minWidth, formWidth);
+            int rowHeight = formWidth >= 1500 ? 600 : 280;
+            float widthRatio = (float)newWidth / paintingsPanel.Size.Width;
+
+            paintingsPanel.Size = new Size((int)(paintingsPanel.Size.Width * widthRatio), paintingsPanel.RowCount * rowHeight);
+            paintingsPanel.Location = new Point((formWidth - paintingsPanel.Width) / 2, 43);
+            
+            for (int i = 0; i < paintingsPanel.RowCount; i++)
+            {
+                RowStyle rowStyle = paintingsPanel.RowStyles[i];
+                rowStyle.SizeType = SizeType.Absolute;
+                rowStyle.Height = rowHeight; 
+            }           
         }
 
         private void PrivatePageForm_Load(object sender, EventArgs e)
@@ -61,6 +70,7 @@ namespace RealArt
             BindLabel(StyleInfoLabel, source, "Style");
             BindTextbox(AboutInfoTextbox, source, "About");
             BindImage(UserPicturebox, source, "Photo");
+            BindPictures(paintingsPanel, user);
         }
 
         private void OrganisationElementsVisibility()
@@ -110,6 +120,59 @@ namespace RealArt
             pictureBox.DataBindings.Add(binding);
         }
 
+        private void BindPictures(TableLayoutPanel tableLayoutPanel, User user)
+        {
+            List<Painting> paintings = GetPictures(user);
+
+            int columnCount = 3;
+
+            for (int i = 0; i < paintings.Count; i++)
+            {
+                PictureBox pictureBox = CreatePictureBox(paintings[i]);
+
+                int row = i / columnCount;
+                int col = i % columnCount;
+                tableLayoutPanel.Controls.Add(pictureBox, col, row);
+
+                if (col == columnCount - 1)
+                {
+                    tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
+                    tableLayoutPanel.RowCount++;
+                }
+            }
+        }
+
+        private List<Painting> GetPictures(User user)
+        {
+            List<Painting> paintings = new List<Painting>();
+            string[] jsonLines = ReadFile("Painting");
+
+            foreach (Guid id in user.Pictures)
+            {
+                foreach (string paintingString in jsonLines)
+                {
+                    Painting? painting = JsonSerializer.Deserialize<Painting?>(paintingString);
+
+                    if (painting?.Id == id)
+                    {
+                        paintings.Add(painting);
+                        break;
+                    }
+                }
+            }
+            return paintings;
+        }
+
+        private PictureBox CreatePictureBox(Painting painting)
+        {
+            PictureBox pictureBox = new PictureBox();
+            pictureBox.Image = Image.FromFile(painting.Photo);
+            pictureBox.Dock = DockStyle.Fill;
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.Margin = new Padding(20);
+            return pictureBox;
+        }
+
         private void AddPhotoButton_Click(object sender, EventArgs e)
         {
             string fileName = SetImage();
@@ -134,11 +197,11 @@ namespace RealArt
                         user = JsonSerializer.Deserialize<Organisation?>(userString);
                     }
 
-                    if (user?.Id == CurrentUser.Info.Id)
+                    if (user.Id == CurrentUser.Info.Id)
                     {
                         user.Photo = fileName;
                     }
-                    
+
                     users.Add(user);
                 }
 
@@ -154,13 +217,13 @@ namespace RealArt
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                fileName = dialog.FileName; 
+                fileName = dialog.FileName;
                 UserPicturebox.ImageLocation = fileName;
             }
-            
+
             return fileName;
         }
-   
+
         private string[] ReadFile(string role)
         {
             string? data = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
@@ -193,6 +256,12 @@ namespace RealArt
 
                 File.AppendAllText(filePath, updatedJson + '\n');
             }
+        }
+
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            UpdateInfoForm updateInfoForm = new UpdateInfoForm();
+            updateInfoForm.ShowDialog();
         }
     }
 }
