@@ -17,7 +17,7 @@ namespace RealArt
 
             if (imageNotFound != null)
             {
-                PaintingPictureBox.Image = Image.FromFile(imageNotFound); 
+                PaintingPictureBox.Image = Image.FromFile(imageNotFound);
             }
 
             if (CurrentUser.Info is Person)
@@ -37,6 +37,26 @@ namespace RealArt
             PriceTextBox.Visible = false;
             OkButton.Location = new Point(825, 216);
             CancelButton.Location = new Point(820, 300);
+        }
+
+        private void UploadButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "Image Files (*.jpg, *.png)|*.jpg;*.png";
+                string fileName = "";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = dialog.FileName;
+                    PaintingPictureBox.ImageLocation = fileName;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("При завантаженні сталася помилка");
+            }
         }
     }
 }
