@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            PictureBox = new PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPaintingForm));
+            PaintingPictureBox = new PictureBox();
             label1 = new Label();
             TitleTextBox = new TextBox();
             label2 = new Label();
@@ -38,27 +39,29 @@
             CreationDate = new DateTimePicker();
             GenreTextBox = new TextBox();
             panel1 = new Panel();
+            ArtistComboBox = new ComboBox();
             CancelButton = new AdditionalElements.RoundButton();
             OkButton = new AdditionalElements.RoundButton();
             UploadButton = new AdditionalElements.RoundButton();
             PriceTextBox = new TextBox();
             PriceLabel = new Label();
             TypeLabel = new Label();
-            ArtistTextBox = new TextBox();
             ArtistLabel = new Label();
-            ((System.ComponentModel.ISupportInitialize)PictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PaintingPictureBox).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // PictureBox
+            // PaintingPictureBox
             // 
-            PictureBox.InitialImage = null;
-            PictureBox.Location = new Point(42, 71);
-            PictureBox.Name = "PictureBox";
-            PictureBox.Size = new Size(279, 375);
-            PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            PictureBox.TabIndex = 0;
-            PictureBox.TabStop = false;
+            PaintingPictureBox.Image = (Image)resources.GetObject("PaintingPictureBox.Image");
+            PaintingPictureBox.ImageLocation = "";
+            PaintingPictureBox.InitialImage = null;
+            PaintingPictureBox.Location = new Point(42, 71);
+            PaintingPictureBox.Name = "PaintingPictureBox";
+            PaintingPictureBox.Size = new Size(279, 375);
+            PaintingPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            PaintingPictureBox.TabIndex = 0;
+            PaintingPictureBox.TabStop = false;
             // 
             // label1
             // 
@@ -67,7 +70,7 @@
             label1.Location = new Point(369, 71);
             label1.Name = "label1";
             label1.Size = new Size(73, 30);
-            label1.TabIndex = 3;
+            label1.TabIndex = 2;
             label1.Text = "Назва";
             // 
             // TitleTextBox
@@ -77,7 +80,7 @@
             TitleTextBox.Multiline = true;
             TitleTextBox.Name = "TitleTextBox";
             TitleTextBox.Size = new Size(313, 75);
-            TitleTextBox.TabIndex = 6;
+            TitleTextBox.TabIndex = 3;
             // 
             // label2
             // 
@@ -86,7 +89,7 @@
             label2.Location = new Point(373, 216);
             label2.Name = "label2";
             label2.Size = new Size(69, 30);
-            label2.TabIndex = 7;
+            label2.TabIndex = 4;
             label2.Text = "Жанр";
             // 
             // label3
@@ -96,17 +99,17 @@
             label3.Location = new Point(373, 362);
             label3.Name = "label3";
             label3.Size = new Size(171, 30);
-            label3.TabIndex = 16;
+            label3.TabIndex = 6;
             label3.Text = "Дата створення";
             // 
             // CopyRadio
             // 
             CopyRadio.AutoSize = true;
             CopyRadio.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            CopyRadio.Location = new Point(900, 274);
+            CopyRadio.Location = new Point(921, 121);
             CopyRadio.Name = "CopyRadio";
             CopyRadio.Size = new Size(88, 32);
-            CopyRadio.TabIndex = 17;
+            CopyRadio.TabIndex = 12;
             CopyRadio.TabStop = true;
             CopyRadio.Text = "Копія";
             CopyRadio.UseVisualStyleBackColor = true;
@@ -115,10 +118,10 @@
             // 
             OriginalRadio.AutoSize = true;
             OriginalRadio.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            OriginalRadio.Location = new Point(752, 274);
+            OriginalRadio.Location = new Point(752, 121);
             OriginalRadio.Name = "OriginalRadio";
             OriginalRadio.Size = new Size(122, 32);
-            OriginalRadio.TabIndex = 18;
+            OriginalRadio.TabIndex = 11;
             OriginalRadio.TabStop = true;
             OriginalRadio.Text = "Оригінал";
             OriginalRadio.UseVisualStyleBackColor = true;
@@ -128,7 +131,7 @@
             CreationDate.Location = new Point(373, 415);
             CreationDate.Name = "CreationDate";
             CreationDate.Size = new Size(300, 31);
-            CreationDate.TabIndex = 19;
+            CreationDate.TabIndex = 7;
             // 
             // GenreTextBox
             // 
@@ -137,21 +140,21 @@
             GenreTextBox.Multiline = true;
             GenreTextBox.Name = "GenreTextBox";
             GenreTextBox.Size = new Size(313, 75);
-            GenreTextBox.TabIndex = 20;
+            GenreTextBox.TabIndex = 5;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(ArtistComboBox);
             panel1.Controls.Add(CancelButton);
             panel1.Controls.Add(OkButton);
             panel1.Controls.Add(UploadButton);
             panel1.Controls.Add(PriceTextBox);
             panel1.Controls.Add(PriceLabel);
             panel1.Controls.Add(TypeLabel);
-            panel1.Controls.Add(ArtistTextBox);
             panel1.Controls.Add(ArtistLabel);
-            panel1.Controls.Add(PictureBox);
+            panel1.Controls.Add(PaintingPictureBox);
             panel1.Controls.Add(CopyRadio);
             panel1.Controls.Add(OriginalRadio);
             panel1.Controls.Add(CreationDate);
@@ -160,10 +163,18 @@
             panel1.Controls.Add(label3);
             panel1.Controls.Add(TitleTextBox);
             panel1.Controls.Add(label2);
-            panel1.Location = new Point(-2, 0);
+            panel1.Location = new Point(-2, -1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1102, 599);
-            panel1.TabIndex = 21;
+            panel1.Size = new Size(1102, 600);
+            panel1.TabIndex = 0;
+            // 
+            // ArtistComboBox
+            // 
+            ArtistComboBox.FormattingEnabled = true;
+            ArtistComboBox.Location = new Point(752, 250);
+            ArtistComboBox.Name = "ArtistComboBox";
+            ArtistComboBox.Size = new Size(309, 33);
+            ArtistComboBox.TabIndex = 17;
             // 
             // CancelButton
             // 
@@ -172,6 +183,7 @@
             CancelButton.BorderColor = Color.Red;
             CancelButton.BorderRadius = 0;
             CancelButton.BorderSize = 0;
+            CancelButton.DialogResult = DialogResult.Cancel;
             CancelButton.FlatAppearance.BorderSize = 0;
             CancelButton.FlatStyle = FlatStyle.Flat;
             CancelButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
@@ -179,7 +191,7 @@
             CancelButton.Location = new Point(921, 511);
             CancelButton.Name = "CancelButton";
             CancelButton.Size = new Size(140, 45);
-            CancelButton.TabIndex = 28;
+            CancelButton.TabIndex = 16;
             CancelButton.Text = "Відміна";
             CancelButton.TextColor = Color.White;
             CancelButton.UseVisualStyleBackColor = false;
@@ -191,6 +203,7 @@
             OkButton.BorderColor = Color.Red;
             OkButton.BorderRadius = 0;
             OkButton.BorderSize = 0;
+            OkButton.DialogResult = DialogResult.OK;
             OkButton.FlatAppearance.BorderSize = 0;
             OkButton.FlatStyle = FlatStyle.Flat;
             OkButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
@@ -198,10 +211,11 @@
             OkButton.Location = new Point(752, 511);
             OkButton.Name = "OkButton";
             OkButton.Size = new Size(130, 45);
-            OkButton.TabIndex = 27;
+            OkButton.TabIndex = 15;
             OkButton.Text = "Ок";
             OkButton.TextColor = Color.White;
             OkButton.UseVisualStyleBackColor = false;
+            OkButton.Click += OkButton_Click;
             // 
             // UploadButton
             // 
@@ -217,10 +231,11 @@
             UploadButton.Location = new Point(74, 473);
             UploadButton.Name = "UploadButton";
             UploadButton.Size = new Size(215, 45);
-            UploadButton.TabIndex = 26;
+            UploadButton.TabIndex = 1;
             UploadButton.Text = "Завантажити";
             UploadButton.TextColor = Color.White;
             UploadButton.UseVisualStyleBackColor = false;
+            UploadButton.Click += UploadButton_Click;
             // 
             // PriceTextBox
             // 
@@ -229,46 +244,37 @@
             PriceTextBox.Multiline = true;
             PriceTextBox.Name = "PriceTextBox";
             PriceTextBox.Size = new Size(309, 60);
-            PriceTextBox.TabIndex = 25;
+            PriceTextBox.TabIndex = 14;
             PriceTextBox.KeyPress += PriceTextBox_KeyPress;
             // 
             // PriceLabel
             // 
             PriceLabel.AutoSize = true;
             PriceLabel.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            PriceLabel.Location = new Point(752, 338);
+            PriceLabel.Location = new Point(752, 330);
             PriceLabel.Name = "PriceLabel";
             PriceLabel.Size = new Size(58, 30);
-            PriceLabel.TabIndex = 24;
+            PriceLabel.TabIndex = 13;
             PriceLabel.Text = "Ціна";
             // 
             // TypeLabel
             // 
             TypeLabel.AutoSize = true;
             TypeLabel.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            TypeLabel.Location = new Point(748, 227);
+            TypeLabel.Location = new Point(752, 71);
             TypeLabel.Name = "TypeLabel";
             TypeLabel.Size = new Size(51, 30);
-            TypeLabel.TabIndex = 23;
+            TypeLabel.TabIndex = 10;
             TypeLabel.Text = "Тип";
-            // 
-            // ArtistTextBox
-            // 
-            ArtistTextBox.Location = new Point(748, 121);
-            ArtistTextBox.MaxLength = 60;
-            ArtistTextBox.Multiline = true;
-            ArtistTextBox.Name = "ArtistTextBox";
-            ArtistTextBox.Size = new Size(313, 75);
-            ArtistTextBox.TabIndex = 22;
             // 
             // ArtistLabel
             // 
             ArtistLabel.AutoSize = true;
             ArtistLabel.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            ArtistLabel.Location = new Point(748, 71);
+            ArtistLabel.Location = new Point(752, 192);
             ArtistLabel.Name = "ArtistLabel";
             ArtistLabel.Size = new Size(115, 30);
-            ArtistLabel.TabIndex = 21;
+            ArtistLabel.TabIndex = 8;
             ArtistLabel.Text = "Художник";
             // 
             // AddPaintingForm
@@ -284,7 +290,8 @@
             Name = "AddPaintingForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            ((System.ComponentModel.ISupportInitialize)PictureBox).EndInit();
+            Load += AddPaintingForm_Load;
+            ((System.ComponentModel.ISupportInitialize)PaintingPictureBox).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -292,7 +299,7 @@
 
         #endregion
 
-        private PictureBox PictureBox;
+        private PictureBox PaintingPictureBox;
         private Label label1;
         private TextBox TitleTextBox;
         private Label label2;
@@ -302,7 +309,6 @@
         private DateTimePicker CreationDate;
         private TextBox GenreTextBox;
         private Panel panel1;
-        private TextBox ArtistTextBox;
         private Label ArtistLabel;
         private Label TypeLabel;
         private Label PriceLabel;
@@ -310,5 +316,6 @@
         private AdditionalElements.RoundButton UploadButton;
         private AdditionalElements.RoundButton CancelButton;
         private AdditionalElements.RoundButton OkButton;
+        private ComboBox ArtistComboBox;
     }
 }
