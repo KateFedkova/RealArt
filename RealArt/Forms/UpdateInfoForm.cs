@@ -88,6 +88,7 @@ namespace RealArt
                             user.Country = CountryChooser.Text;
                             user.About = AboutTextbox.Text;
                             user.Style = StyleTextbox.Text;
+                            UpdateCurrentPerson((Person) CurrentUser.Info);
                         }
 
                         if (user != null)
@@ -107,12 +108,15 @@ namespace RealArt
                             user.Address = AddressTextbox.Text;
                             user.OpeningTime = OpeningTimePicker.Text;
                             user.ClosingTime = ClosingTimePicker.Text;
+
+                            UpdateCurrentOrganisation((Organisation) CurrentUser.Info);
                         }
 
                         if (user != null)
                         {
                             users.Add(user);
                         }
+
                     }
                 }
 
@@ -139,6 +143,21 @@ namespace RealArt
             }
 
             return false;
+        }
+
+        private void UpdateCurrentPerson(Person person)
+        {
+            person.Country = CountryChooser.Text;
+            person.About = AboutTextbox.Text;
+            person.Style = StyleTextbox.Text;
+        }
+
+        private void UpdateCurrentOrganisation(Organisation organisation)
+        {
+            organisation.Country = CountryChooser.Text;
+            organisation.About = AboutTextbox.Text;
+            organisation.OpeningTime = OpeningTimePicker.Text;
+            organisation.ClosingTime = ClosingTimePicker.Text;
         }
 
         private string[] ReadFile(string role)
