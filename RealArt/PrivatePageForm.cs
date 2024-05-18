@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Text.Json;
 using RealArt.Models;
 
@@ -157,7 +156,9 @@ namespace RealArt
                 List<Painting> paintings = GetPictures(user);
                 for (int i = 0; i < paintings.Count; i++)
                 {
-                    PictureBox pictureBox = CreatePictureBox(paintings[i]);
+                    Painting painting = paintings[i];
+                    PictureBox pictureBox = CreatePictureBox(painting);
+                    pictureBox.Click += (sender, e) => OnPictureBoxClick(painting);
 
                     int row = i / columnCount;
                     int col = i % columnCount;
@@ -322,6 +323,20 @@ namespace RealArt
             }
         }
 
+        private void OnPictureBoxClick(object item)
+        {
+            if (item is Painting painting)
+            {
+                PaintingForm paintingForm = new PaintingForm(painting);
+                paintingForm.ShowDialog();
+                PrivatePageForm_Load(null, null);
+            }
+            else if (item is Auction auction)
+            {
+                
+            }
+        }
+        
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             UpdateInfoForm updateInfoForm = new UpdateInfoForm();
@@ -331,7 +346,7 @@ namespace RealArt
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            AddPaintingForm addPaintingForm = new AddPaintingForm();
+            PaintingForm addPaintingForm = new PaintingForm();
             addPaintingForm.ShowDialog();
             PrivatePageForm_Load(null, null);
         }

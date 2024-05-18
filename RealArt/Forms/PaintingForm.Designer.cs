@@ -1,6 +1,6 @@
 ﻿namespace RealArt
 {
-    partial class AddPaintingForm
+    partial class PaintingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPaintingForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaintingForm));
             PaintingPictureBox = new PictureBox();
             label1 = new Label();
             TitleTextBox = new TextBox();
@@ -39,6 +39,8 @@
             CreationDate = new DateTimePicker();
             GenreTextBox = new TextBox();
             panel1 = new Panel();
+            DeleteButton = new AdditionalElements.RoundButton();
+            UpdateButton = new AdditionalElements.RoundButton();
             ArtistComboBox = new ComboBox();
             CancelButton = new AdditionalElements.RoundButton();
             OkButton = new AdditionalElements.RoundButton();
@@ -109,7 +111,7 @@
             CopyRadio.Location = new Point(921, 121);
             CopyRadio.Name = "CopyRadio";
             CopyRadio.Size = new Size(88, 32);
-            CopyRadio.TabIndex = 12;
+            CopyRadio.TabIndex = 10;
             CopyRadio.TabStop = true;
             CopyRadio.Text = "Копія";
             CopyRadio.UseVisualStyleBackColor = true;
@@ -121,7 +123,7 @@
             OriginalRadio.Location = new Point(752, 121);
             OriginalRadio.Name = "OriginalRadio";
             OriginalRadio.Size = new Size(122, 32);
-            OriginalRadio.TabIndex = 11;
+            OriginalRadio.TabIndex = 9;
             OriginalRadio.TabStop = true;
             OriginalRadio.Text = "Оригінал";
             OriginalRadio.UseVisualStyleBackColor = true;
@@ -146,6 +148,8 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(DeleteButton);
+            panel1.Controls.Add(UpdateButton);
             panel1.Controls.Add(ArtistComboBox);
             panel1.Controls.Add(CancelButton);
             panel1.Controls.Add(OkButton);
@@ -168,13 +172,54 @@
             panel1.Size = new Size(1102, 600);
             panel1.TabIndex = 0;
             // 
+            // DeleteButton
+            // 
+            DeleteButton.BackColor = Color.MediumSlateBlue;
+            DeleteButton.BackgroundColor = Color.MediumSlateBlue;
+            DeleteButton.BorderColor = Color.Red;
+            DeleteButton.BorderRadius = 0;
+            DeleteButton.BorderSize = 0;
+            DeleteButton.DialogResult = DialogResult.OK;
+            DeleteButton.FlatAppearance.BorderSize = 0;
+            DeleteButton.FlatStyle = FlatStyle.Flat;
+            DeleteButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            DeleteButton.ForeColor = Color.White;
+            DeleteButton.Location = new Point(752, 511);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(140, 45);
+            DeleteButton.TabIndex = 18;
+            DeleteButton.Text = "Видалити";
+            DeleteButton.TextColor = Color.White;
+            DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
+            // 
+            // UpdateButton
+            // 
+            UpdateButton.BackColor = Color.MediumSlateBlue;
+            UpdateButton.BackgroundColor = Color.MediumSlateBlue;
+            UpdateButton.BorderColor = Color.Red;
+            UpdateButton.BorderRadius = 0;
+            UpdateButton.BorderSize = 0;
+            UpdateButton.FlatAppearance.BorderSize = 0;
+            UpdateButton.FlatStyle = FlatStyle.Flat;
+            UpdateButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            UpdateButton.ForeColor = Color.White;
+            UpdateButton.Location = new Point(594, 511);
+            UpdateButton.Name = "UpdateButton";
+            UpdateButton.Size = new Size(130, 45);
+            UpdateButton.TabIndex = 17;
+            UpdateButton.Text = "Змінити";
+            UpdateButton.TextColor = Color.White;
+            UpdateButton.UseVisualStyleBackColor = false;
+            UpdateButton.Click += UpdateButton_Click;
+            // 
             // ArtistComboBox
             // 
             ArtistComboBox.FormattingEnabled = true;
             ArtistComboBox.Location = new Point(752, 250);
             ArtistComboBox.Name = "ArtistComboBox";
             ArtistComboBox.Size = new Size(309, 33);
-            ArtistComboBox.TabIndex = 17;
+            ArtistComboBox.TabIndex = 12;
             // 
             // CancelButton
             // 
@@ -264,7 +309,7 @@
             TypeLabel.Location = new Point(752, 71);
             TypeLabel.Name = "TypeLabel";
             TypeLabel.Size = new Size(51, 30);
-            TypeLabel.TabIndex = 10;
+            TypeLabel.TabIndex = 8;
             TypeLabel.Text = "Тип";
             // 
             // ArtistLabel
@@ -274,7 +319,7 @@
             ArtistLabel.Location = new Point(752, 192);
             ArtistLabel.Name = "ArtistLabel";
             ArtistLabel.Size = new Size(115, 30);
-            ArtistLabel.TabIndex = 8;
+            ArtistLabel.TabIndex = 11;
             ArtistLabel.Text = "Художник";
             // 
             // AddPaintingForm
@@ -317,5 +362,7 @@
         private AdditionalElements.RoundButton CancelButton;
         private AdditionalElements.RoundButton OkButton;
         private ComboBox ArtistComboBox;
+        private AdditionalElements.RoundButton DeleteButton;
+        private AdditionalElements.RoundButton UpdateButton;
     }
 }
