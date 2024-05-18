@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Text.Json;
 using RealArt.Models;
 
@@ -61,6 +62,7 @@ namespace RealArt
             WorkingTimeLabel.Visible = false;
             AddressInfoLabel.Visible = false;
             WorkingTimeInfoLabel.Visible = false;
+            AddAuctionButton.Visible = false;
         }
 
         private void PersonSetInfo(BindingSource source, Person user)
@@ -81,6 +83,8 @@ namespace RealArt
             AddressInfoLabel.Location = new Point(293, 79);
             WorkingTimeLabel.Location = new Point(201, 125);
             WorkingTimeInfoLabel.Location = new Point(328, 125);
+
+            if (CurrentUser.Role == "Museum") AddAuctionButton.Visible = false;
         }
 
         private void OrganisationSetInfo(BindingSource source, Organisation user)
@@ -92,6 +96,7 @@ namespace RealArt
             BindLabel(WorkingTimeInfoLabel, source, "Time");
             BindTextbox(AboutInfoTextbox, source, "About");
             BindImage(UserPicturebox, source, "Photo");
+            BindPictures(paintingsPanel, user);
         }
 
         private void BindLabel(Label label, object source, string property)
@@ -127,22 +132,42 @@ namespace RealArt
         {
             tableLayoutPanel.Controls.Clear();
             tableLayoutPanel.RowCount = 0;
-            List<Painting> paintings = GetPictures(user);
-
             int columnCount = 3;
-
-            for (int i = 0; i < paintings.Count; i++)
+            
+            if (CurrentUser.Role == "Organisation")
             {
-                PictureBox pictureBox = CreatePictureBox(paintings[i]);
-
-                int row = i / columnCount;
-                int col = i % columnCount;
-                tableLayoutPanel.Controls.Add(pictureBox, col, row);
-
-                if (col == columnCount - 1)
+                List<Auction> auctions = GetAuctions(user);
+                for (int i = 0; i < auctions.Count; i++)
                 {
-                    tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
-                    tableLayoutPanel.RowCount++;
+                    PictureBox pictureBox = CreatePictureBox(auctions[i]);
+
+                    int row = i / columnCount;
+                    int col = i % columnCount;
+                    tableLayoutPanel.Controls.Add(pictureBox, col, row);
+
+                    if (col == columnCount - 1)
+                    {
+                        tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
+                        tableLayoutPanel.RowCount++;
+                    }
+                }
+            }
+            else
+            {
+                List<Painting> paintings = GetPictures(user);
+                for (int i = 0; i < paintings.Count; i++)
+                {
+                    PictureBox pictureBox = CreatePictureBox(paintings[i]);
+
+                    int row = i / columnCount;
+                    int col = i % columnCount;
+                    tableLayoutPanel.Controls.Add(pictureBox, col, row);
+
+                    if (col == columnCount - 1)
+                    {
+                        tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
+                        tableLayoutPanel.RowCount++;
+                    }
                 }
             }
         }
@@ -168,10 +193,41 @@ namespace RealArt
             return paintings;
         }
 
-        private PictureBox CreatePictureBox(Painting painting)
+        private List<Auction> GetAuctions(User user)
+        {
+            List<Auction> paintings = new List<Auction>();
+            string[] jsonLines = ReadFile("Auction");
+
+            foreach (Guid id in user.Pictures)
+            {
+                foreach (string auctionString in jsonLines)
+                {
+                    Auction? auction = JsonSerializer.Deserialize<Auction?>(auctionString);
+
+                    if (auction?.Id == id)
+                    {
+                        paintings.Add(auction);
+                        break;
+                    }
+                }
+            }
+            return paintings;
+        }
+
+        private PictureBox CreatePictureBox(object item)
         {
             PictureBox pictureBox = new PictureBox();
-            pictureBox.Image = Image.FromFile(painting.Photo);
+
+            if (item is Painting painting)
+            {
+                pictureBox.Image = Image.FromFile(painting.Photo);
+            }
+
+            else if (item is Auction auction)
+            {
+                pictureBox.Image = Image.FromFile(auction.Photo);
+            }
+
             pictureBox.Dock = DockStyle.Fill;
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.Margin = new Padding(20);
@@ -277,6 +333,13 @@ namespace RealArt
         {
             AddPaintingForm addPaintingForm = new AddPaintingForm();
             addPaintingForm.ShowDialog();
+            PrivatePageForm_Load(null, null);
+        }
+
+        private void AddAuctionButton_Click(object sender, EventArgs e)
+        {
+            AddAuctionForm addAuctionForm = new AddAuctionForm();
+            addAuctionForm.ShowDialog();
             PrivatePageForm_Load(null, null);
         }
     }
