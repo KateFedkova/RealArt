@@ -6,11 +6,66 @@ namespace RealArt
 {
     public partial class AddAuctionForm : Form
     {
-        public AddAuctionForm()
+        private Auction? auctionInfo;
+
+        public AddAuctionForm(Auction? auctionInfo = null)
         {
             InitializeComponent();
-            AuctionDate.MinDate = DateTime.Now;
-        }  
+            this.auctionInfo = auctionInfo;
+        }
+
+        private void AddAuctionForm_Load(object sender, EventArgs e)
+        {
+            if (auctionInfo != null)
+            {
+                BindingSource bindingSource = new BindingSource();
+                UploadButton.Visible = false;
+                OkButton.Visible = false;
+                SetInfo(bindingSource, auctionInfo);
+                MakeReadonly();
+            }
+
+            else
+            {
+                AddPaintingButton.Visible = false;
+                UpdateButton.Visible = false;
+                DeleteButton.Visible = false;
+            }
+        }
+
+        private void MakeReadonly()
+        {
+            TitleTextBox.ReadOnly = true;
+            AuctionDate.Enabled = false;
+            AuctionTime.Enabled = false;
+        }
+
+        private void SetInfo(BindingSource source, Auction auction)
+        {
+            source.DataSource = auction;
+            BindData(TitleTextBox, source, "Name");
+            BindData(AuctionDate, source, "Date");
+            BindData(AuctionTime, source, "Time");
+            BindImage(PaintingPictureBox, source, "Photo");
+        }
+
+        private void BindData(Control control, object dataSource, string propertyName)
+        {
+            control.DataBindings.Clear();
+            Binding binding = new Binding("Text", dataSource, propertyName, false, DataSourceUpdateMode.Never);
+            binding.Format += (sender, e) =>
+            {
+                e.Value ??= "невідомо";
+            };
+            control.DataBindings.Add(binding);
+        }
+
+        private void BindImage(PictureBox pictureBox, object dataSource, string propertyName)
+        {
+            pictureBox.DataBindings.Clear();
+            Binding binding = new Binding("ImageLocation", dataSource, propertyName, false, DataSourceUpdateMode.Never);
+            pictureBox.DataBindings.Add(binding);
+        }
 
         private void UploadButton_Click(object sender, EventArgs e)
         {
@@ -38,18 +93,29 @@ namespace RealArt
             string time = AuctionTime.Text;
             string photo = PaintingPictureBox.ImageLocation;
 
-            if (CheckInfoIsGiven(title, date, time, photo))
+            if (auctionInfo == null && CheckInfoIsGiven(title, date, time, photo))
             {
-                Auction auction = new Auction(title, date, time, CurrentUser.Info.Username);
-                             
-                AddAuctionToOwner(CurrentUser.Role, auction.Id);
-                
-                string json = JsonSerializer.Serialize(auction);
-                string? path = ConfigurationManager.AppSettings["PathToAuctionsData"];
-
-                if (path != null)
+                if (DateTime.Parse(date) >= DateTime.Now)
                 {
-                    File.AppendAllText(path, json + '\n');
+                    Auction auction = new Auction(title, date, time, CurrentUser.Info.Username, photo);
+                    AddAuctionToOwner(auction.Id);
+                    string? path = ConfigurationManager.AppSettings["PathToAuctionsData"];
+                    FileWorker.AppendToFile(path, auction);
+                }
+                else
+                {
+                    MessageBox.Show("Дата обрана неправильно");
+                    this.DialogResult = DialogResult.None;
+                }
+            }
+
+
+            else if (auctionInfo != null && CheckInfoIsGiven(title, date, time, photo))
+            {
+                if (InfoChanged(auctionInfo))
+                {
+                    MessageBox.Show("1");
+                    UpdateAuction(title, date, time, photo);
                 }
             }
 
@@ -58,6 +124,14 @@ namespace RealArt
                 MessageBox.Show("Не всі дані були надані");
                 this.DialogResult = DialogResult.None;
             }
+        }
+
+        private bool InfoChanged(Auction auction)
+        {
+            return auction.Name != TitleTextBox.Text ||
+                auction.Date != AuctionDate.Text ||
+                auction.Time != AuctionTime.Text ||
+                auction.Photo != PaintingPictureBox.ImageLocation;
         }
 
         private bool CheckInfoIsGiven(string title, string date, string time, string photo)
@@ -69,16 +143,16 @@ namespace RealArt
             return true;
         }
 
-        private void AddAuctionToOwner(string role, Guid AuctionId)
+        private void AddAuctionToOwner(Guid AuctionId)
         {
-            string[] jsonLines = ReadFile(role + "s");
             CurrentUser.Info.Pictures.Add(AuctionId);
+            string[] jsonLines = FileWorker.ReadFile("Organisations");
             List<Organisation> users = new List<Organisation>();
 
             foreach (string userString in jsonLines)
             {
                 Organisation? user = JsonSerializer.Deserialize<Organisation?>(userString);
-                
+
                 if (user?.Id == CurrentUser.Info.Id)
                 {
                     user.Pictures.Add(AuctionId);
@@ -89,30 +163,151 @@ namespace RealArt
                     users.Add(user);
                 }
             }
-            UpdateInfoInFiles(role, users);
+            string? filePath = ConfigurationManager.AppSettings["PathToOrganisationsData"];
+            UpdateInfoInFiles(filePath, users);
         }
 
-        private string[] ReadFile(string role)
+        private void RemoveAuctionFromOwner(string role, Guid AuctionId)
         {
-            string? data = ConfigurationManager.AppSettings["PathTo" + role + "Data"];
+            CurrentUser.Info.Pictures.Remove(AuctionId);
+            string[] jsonLines = FileWorker.ReadFile(role + "s");
+            List<Organisation> users = new List<Organisation>();
 
-            string jsonData = File.ReadAllText(data);
-
-            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            return jsonLines;
-        }
-
-        private void UpdateInfoInFiles(string role, List<Organisation> users)
-        {
-            string? filePath = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
-            File.WriteAllText(filePath, string.Empty);
-
-            foreach (User user in users)
+            foreach (string userString in jsonLines)
             {
-                string updatedJson = JsonSerializer.Serialize((Organisation)user);
-                File.AppendAllText(filePath, updatedJson + '\n');
+                Organisation? user = JsonSerializer.Deserialize<Organisation?>(userString);
+
+                if (user?.Id == CurrentUser.Info.Id)
+                {
+                    user.Pictures.Remove(AuctionId);
+                }
+
+                if (user != null)
+                {
+                    users.Add(user);
+                }
             }
+            string? filePath = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
+            UpdateInfoInFiles(filePath, users);
+        }
+
+        private void UpdateAuction(string title, string date, string time, string photo)
+        {
+            string[] jsonLines = FileWorker.ReadFile("Auctions");
+            List<Auction> auctions = new List<Auction>();
+
+            foreach (string auctionString in jsonLines)
+            {
+                Auction? auction = JsonSerializer.Deserialize<Auction?>(auctionString);
+
+                if (auction?.Id == auctionInfo.Id)
+                {
+                    auction.Name = title;
+                    auction.Date = date;
+                    auction.Time = time;
+                    auction.Photo = photo;
+                }
+
+                if (auction != null)
+                {
+                    auctions.Add(auction);
+                }
+            }
+
+            string? filePath = ConfigurationManager.AppSettings["PathToAuctionsData"];
+            AppendToFileList(filePath, auctions);
+        }
+
+        private void AppendToFileList(string filePath, List<Auction> auctions)
+        {
+            if (filePath != null)
+            {
+                File.WriteAllText(filePath, string.Empty);
+
+                foreach (Auction auction in auctions)
+                {
+                    string updatedJson = JsonSerializer.Serialize(auction);
+                    File.AppendAllText(filePath, updatedJson + '\n');
+                }
+            }
+        }
+
+        private void UpdateInfoInFiles(string path, List<Organisation> users)
+        {
+            if (path != null)
+            {
+                File.WriteAllText(path, string.Empty);
+
+                foreach (Organisation user in users)
+                {
+                    string updatedJson = JsonSerializer.Serialize(user);
+                    File.AppendAllText(path, updatedJson + '\n');
+                }
+            }
+        }
+
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            UploadButton.Visible = true;
+            OkButton.Visible = true;
+            AddPaintingButton.Visible = false;
+            UpdateButton.Visible = false;
+            TitleTextBox.ReadOnly = false;
+            AuctionDate.Enabled = true;
+            AuctionTime.Enabled = true;
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            string role = CurrentUser.Role;
+            RemoveAuctionFromOwner(role, auctionInfo.Id);
+            
+            List<Auction> auctions = ChooseAuctions();
+            string? filePath = ConfigurationManager.AppSettings["PathToAuctionsData"];
+            AppendToFileList(filePath, auctions);
+
+            DeleteAuctionPaintings();    
+        }
+        
+
+        private List<Auction> ChooseAuctions()
+        {
+            string[] jsonLines = FileWorker.ReadFile("Auctions");
+            List<Auction> auctions = new List<Auction>();
+            foreach (string auctionString in jsonLines)
+            {
+                Auction? auction = JsonSerializer.Deserialize<Auction?>(auctionString);
+
+                if (auction != null && auction?.Id != auctionInfo.Id)
+                {
+                    auctions.Add(auction);
+                }
+            }
+            return auctions;
+        }
+
+        private void DeleteAuctionPaintings()
+        {
+            string? path = ConfigurationManager.AppSettings["PathToPainitingsData"];
+            string[] jsonLines = FileWorker.ReadFile("Paintings");
+            List<Painting> paintings = new List<Painting>();
+
+            foreach (string paintingString in jsonLines)
+            {
+                Painting? user = JsonSerializer.Deserialize<Painting?>(paintingString);
+                if (!auctionInfo.Pictures.Contains(user.Id))
+                {
+                    paintings.Add(user);
+                }
+            }
+
+            FileWorker.AppendToFilePaintings(path, paintings);
+        }
+
+        private void AddPaintingButton_Click(object sender, EventArgs e)
+        {
+            PaintingForm paintingForm = new PaintingForm();
+            paintingForm.ShowDialog();
         }
     }
 }

@@ -35,6 +35,9 @@
             label2 = new Label();
             AuctionDate = new DateTimePicker();
             panel1 = new Panel();
+            AddPaintingButton = new AdditionalElements.RoundButton();
+            DeleteButton = new AdditionalElements.RoundButton();
+            UpdateButton = new AdditionalElements.RoundButton();
             label3 = new Label();
             AuctionTime = new DateTimePicker();
             CancelButton = new AdditionalElements.RoundButton();
@@ -82,7 +85,7 @@
             label2.Location = new Point(373, 235);
             label2.Name = "label2";
             label2.Size = new Size(189, 30);
-            label2.TabIndex = 6;
+            label2.TabIndex = 4;
             label2.Text = "Дата проведення";
             // 
             // AuctionDate
@@ -91,12 +94,15 @@
             AuctionDate.Location = new Point(373, 288);
             AuctionDate.Name = "AuctionDate";
             AuctionDate.Size = new Size(300, 31);
-            AuctionDate.TabIndex = 7;
+            AuctionDate.TabIndex = 5;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(AddPaintingButton);
+            panel1.Controls.Add(DeleteButton);
+            panel1.Controls.Add(UpdateButton);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(AuctionTime);
             panel1.Controls.Add(CancelButton);
@@ -109,8 +115,70 @@
             panel1.Controls.Add(TitleTextBox);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(756, 600);
+            panel1.Size = new Size(756, 647);
             panel1.TabIndex = 0;
+            // 
+            // AddPaintingButton
+            // 
+            AddPaintingButton.BackColor = Color.MediumSlateBlue;
+            AddPaintingButton.BackgroundColor = Color.MediumSlateBlue;
+            AddPaintingButton.BorderColor = Color.Red;
+            AddPaintingButton.BorderRadius = 0;
+            AddPaintingButton.BorderSize = 0;
+            AddPaintingButton.DialogResult = DialogResult.OK;
+            AddPaintingButton.FlatAppearance.BorderSize = 0;
+            AddPaintingButton.FlatStyle = FlatStyle.Flat;
+            AddPaintingButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            AddPaintingButton.ForeColor = Color.White;
+            AddPaintingButton.Location = new Point(541, 507);
+            AddPaintingButton.Name = "AddPaintingButton";
+            AddPaintingButton.Size = new Size(192, 45);
+            AddPaintingButton.TabIndex = 8;
+            AddPaintingButton.Text = "Додати картину";
+            AddPaintingButton.TextColor = Color.White;
+            AddPaintingButton.UseVisualStyleBackColor = false;
+            AddPaintingButton.Click += AddPaintingButton_Click;
+            // 
+            // DeleteButton
+            // 
+            DeleteButton.BackColor = Color.MediumSlateBlue;
+            DeleteButton.BackgroundColor = Color.MediumSlateBlue;
+            DeleteButton.BorderColor = Color.Red;
+            DeleteButton.BorderRadius = 0;
+            DeleteButton.BorderSize = 0;
+            DeleteButton.DialogResult = DialogResult.OK;
+            DeleteButton.FlatAppearance.BorderSize = 0;
+            DeleteButton.FlatStyle = FlatStyle.Flat;
+            DeleteButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            DeleteButton.ForeColor = Color.White;
+            DeleteButton.Location = new Point(318, 577);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(128, 45);
+            DeleteButton.TabIndex = 9;
+            DeleteButton.Text = "Видалити";
+            DeleteButton.TextColor = Color.White;
+            DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
+            // 
+            // UpdateButton
+            // 
+            UpdateButton.BackColor = Color.MediumSlateBlue;
+            UpdateButton.BackgroundColor = Color.MediumSlateBlue;
+            UpdateButton.BorderColor = Color.Red;
+            UpdateButton.BorderRadius = 0;
+            UpdateButton.BorderSize = 0;
+            UpdateButton.FlatAppearance.BorderSize = 0;
+            UpdateButton.FlatStyle = FlatStyle.Flat;
+            UpdateButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            UpdateButton.ForeColor = Color.White;
+            UpdateButton.Location = new Point(460, 577);
+            UpdateButton.Name = "UpdateButton";
+            UpdateButton.Size = new Size(130, 45);
+            UpdateButton.TabIndex = 10;
+            UpdateButton.Text = "Змінити";
+            UpdateButton.TextColor = Color.White;
+            UpdateButton.UseVisualStyleBackColor = false;
+            UpdateButton.Click += UpdateButton_Click;
             // 
             // label3
             // 
@@ -119,7 +187,7 @@
             label3.Location = new Point(373, 357);
             label3.Name = "label3";
             label3.Size = new Size(135, 30);
-            label3.TabIndex = 19;
+            label3.TabIndex = 6;
             label3.Text = "Час початку";
             // 
             // AuctionTime
@@ -129,7 +197,7 @@
             AuctionTime.Name = "AuctionTime";
             AuctionTime.ShowUpDown = true;
             AuctionTime.Size = new Size(300, 31);
-            AuctionTime.TabIndex = 18;
+            AuctionTime.TabIndex = 7;
             // 
             // CancelButton
             // 
@@ -143,10 +211,10 @@
             CancelButton.FlatStyle = FlatStyle.Flat;
             CancelButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             CancelButton.ForeColor = Color.White;
-            CancelButton.Location = new Point(556, 511);
+            CancelButton.Location = new Point(603, 577);
             CancelButton.Name = "CancelButton";
             CancelButton.Size = new Size(130, 45);
-            CancelButton.TabIndex = 16;
+            CancelButton.TabIndex = 12;
             CancelButton.Text = "Відміна";
             CancelButton.TextColor = Color.White;
             CancelButton.UseVisualStyleBackColor = false;
@@ -163,10 +231,10 @@
             OkButton.FlatStyle = FlatStyle.Flat;
             OkButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             OkButton.ForeColor = Color.White;
-            OkButton.Location = new Point(432, 511);
+            OkButton.Location = new Point(480, 577);
             OkButton.Name = "OkButton";
             OkButton.Size = new Size(95, 45);
-            OkButton.TabIndex = 15;
+            OkButton.TabIndex = 11;
             OkButton.Text = "Ок";
             OkButton.TextColor = Color.White;
             OkButton.UseVisualStyleBackColor = false;
@@ -196,14 +264,16 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(757, 601);
+            ClientSize = new Size(757, 648);
             ControlBox = false;
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            MaximumSize = new Size(1100, 601);
+            MaximumSize = new Size(757, 648);
+            MinimumSize = new Size(757, 648);
             Name = "AddAuctionForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
+            Load += AddAuctionForm_Load;
             ((System.ComponentModel.ISupportInitialize)PaintingPictureBox).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -223,5 +293,8 @@
         private AdditionalElements.RoundButton OkButton;
         private DateTimePicker AuctionTime;
         private Label label3;
+        private AdditionalElements.RoundButton AddPaintingButton;
+        private AdditionalElements.RoundButton DeleteButton;
+        private AdditionalElements.RoundButton UpdateButton;
     }
 }
