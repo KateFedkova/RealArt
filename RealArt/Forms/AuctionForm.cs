@@ -177,7 +177,7 @@ namespace RealArt
                     users.Add(user);
                 }
             }
-            string? filePath = ConfigurationManager.AppSettings["PathToOrganisationsData"];
+            string? filePath = FileWorker.GetPath("Organisations");
             UpdateInfoInFiles(filePath, users);
         }
 
@@ -201,7 +201,7 @@ namespace RealArt
                     users.Add(user);
                 }
             }
-            string? filePath = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
+            string? filePath = FileWorker.GetPath(role + "s");
             UpdateInfoInFiles(filePath, users);
         }
 
@@ -228,7 +228,7 @@ namespace RealArt
                 }
             }
 
-            string? filePath = ConfigurationManager.AppSettings["PathToAuctionsData"];
+            string? filePath = FileWorker.GetPath("Auctions");
             AppendToFileList(filePath, auctions);
         }
 
@@ -277,7 +277,7 @@ namespace RealArt
             RemoveAuctionFromOwner(role, auctionInfo.Id);
 
             List<Auction> auctions = ChooseAuctions();
-            string? filePath = ConfigurationManager.AppSettings["PathToAuctionsData"];
+            string? filePath = FileWorker.GetPath("Auctions");
             AppendToFileList(filePath, auctions);
 
             DeleteAuctionPaintings();
@@ -302,7 +302,7 @@ namespace RealArt
 
         private void DeleteAuctionPaintings()
         {
-            string? path = ConfigurationManager.AppSettings["PathToPainitingsData"];
+            string? path = FileWorker.GetPath("Painitings");
             string[] jsonLines = FileWorker.ReadFile("Paintings");
             List<Painting> paintings = new List<Painting>();
 

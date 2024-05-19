@@ -147,13 +147,13 @@ namespace RealArt
             switch (role)
             {
                 case "Artists":
-                    return ConfigurationManager.AppSettings["PathToArtistsData"];
+                    return FileWorker.GetPath("Artists");
                 case "—ollectors":
-                    return ConfigurationManager.AppSettings["PathTo—ollectorsData"];
+                    return FileWorker.GetPath("—ollectors");
                 case "Museums":
-                    return ConfigurationManager.AppSettings["PathToMuseumsData"];
+                    return FileWorker.GetPath("Museums");
                 case "Organisations":
-                    return ConfigurationManager.AppSettings["PathToOrganisationsData"];
+                    return FileWorker.GetPath("Organisations");
                 default:
                     return null;
             }

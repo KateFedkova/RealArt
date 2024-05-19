@@ -264,7 +264,7 @@ namespace RealArt
                 AddPaintingToAuction(painting.Id);
             }
 
-            string? filePath = ConfigurationManager.AppSettings["PathToPaintingsData"];
+            string? filePath = FileWorker.GetPath("Paintings");
             FileWorker.AppendToFile(filePath, painting);
         }
 
@@ -293,7 +293,7 @@ namespace RealArt
                 }
             }
 
-            string? filePath = ConfigurationManager.AppSettings["PathToPaintingsData"];
+            string? filePath = FileWorker.GetPath("Paintings");
             FileWorker.AppendToFilePaintings(filePath, paintings);
         }
         
@@ -431,7 +431,7 @@ namespace RealArt
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            string? filePath = ConfigurationManager.AppSettings["PathToPaintingsData"];
+            string? filePath = FileWorker.GetPath("Paintings");
             List<Painting> paintings = ChoosePaintings();
             FileWorker.AppendToFilePaintings(filePath, paintings);
             
