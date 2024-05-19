@@ -1,5 +1,4 @@
 ﻿using RealArt.Models;
-using System.Configuration;
 using System.Text.Json;
 
 namespace RealArt
@@ -73,7 +72,7 @@ namespace RealArt
             if (InfoChanged())
             {
                 string role = CurrentUser.Role;
-                string[] jsonLines = ReadFile(role);
+                string[] jsonLines = FileWorker.ReadFile(role + "s");
                 List<User> users = new List<User>();
 
                 foreach (string userString in jsonLines)
@@ -116,11 +115,10 @@ namespace RealArt
                         {
                             users.Add(user);
                         }
-
                     }
                 }
 
-                UpdateInfoInFiles(role, users);
+                FileWorker.UpdateInfoInFiles(role, users);
             }
         }
 
@@ -158,44 +156,6 @@ namespace RealArt
             organisation.About = AboutTextbox.Text;
             organisation.OpeningTime = OpeningTimePicker.Text;
             organisation.ClosingTime = ClosingTimePicker.Text;
-        }
-
-        private string[] ReadFile(string role)
-        {
-            string? data = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
-
-            string jsonData = File.ReadAllText(data);
-
-            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            return jsonLines;
-        }
-
-        private void UpdateInfoInFiles(string role, List<User> users)
-        {
-            string? filePath = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
-
-            if (filePath != null)
-            {
-                File.WriteAllText(filePath, string.Empty);
-
-                foreach (User user in users)
-                {
-                    string updatedJson = "";
-
-                    if (role == "Artist" || role == "Collector")
-                    {
-                        updatedJson = JsonSerializer.Serialize((Person)user);
-                    }
-
-                    else if (role == "Museum" || role == "Organisation")
-                    {
-                        updatedJson = JsonSerializer.Serialize((Organisation)user);
-                    }
-
-                    File.AppendAllText(filePath, updatedJson + '\n');
-                }
-            }
         }
     }
 }

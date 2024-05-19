@@ -1,6 +1,6 @@
 ﻿namespace RealArt
 {
-    partial class AddAuctionForm
+    partial class AuctionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddAuctionForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AuctionForm));
             PaintingPictureBox = new PictureBox();
             label1 = new Label();
             TitleTextBox = new TextBox();

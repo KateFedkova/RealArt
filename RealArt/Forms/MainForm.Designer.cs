@@ -42,6 +42,7 @@
             OrganisationsButton = new AdditionalElements.RoundButton();
             panel2 = new Panel();
             MainPanel = new Panel();
+            itemsPanel = new TableLayoutPanel();
             QuotePicturebox = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ToPage).BeginInit();
@@ -253,6 +254,7 @@
             // MainPanel
             // 
             MainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            MainPanel.Controls.Add(itemsPanel);
             MainPanel.Controls.Add(QuotePicturebox);
             MainPanel.Controls.Add(QuoteLabel);
             MainPanel.Location = new Point(2, 221);
@@ -260,6 +262,21 @@
             MainPanel.Size = new Size(1076, 424);
             MainPanel.TabIndex = 8;
             MainPanel.Resize += MainPanel_Resize;
+            // 
+            // itemsPanel
+            // 
+            itemsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            itemsPanel.AutoSize = true;
+            itemsPanel.ColumnCount = 3;
+            itemsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            itemsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            itemsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            itemsPanel.Location = new Point(81, 27);
+            itemsPanel.Name = "itemsPanel";
+            itemsPanel.RowCount = 1;
+            itemsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280F));
+            itemsPanel.Size = new Size(904, 280);
+            itemsPanel.TabIndex = 11;
             // 
             // QuotePicturebox
             // 
@@ -285,12 +302,12 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Load += MainForm_Load;
-            Resize += MainForm_Resize;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ToPage).EndInit();
             panel2.ResumeLayout(false);
             MainPanel.ResumeLayout(false);
+            MainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)QuotePicturebox).EndInit();
             ResumeLayout(false);
         }
@@ -310,5 +327,6 @@
         private AdditionalElements.CirclePicturebox ToPage;
         private Panel MainPanel;
         private PictureBox QuotePicturebox;
+        private TableLayoutPanel itemsPanel;
     }
 }

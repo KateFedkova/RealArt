@@ -38,7 +38,7 @@ namespace RealArt
             string username = NameArea.Text;
             string password = PasswordArea.Text;
             string checkedRole = GetSelectedRole();
-            string[] roles = { "Artists", "Ñollectors", "Museums", "Organisations" };
+            string[] roles = { "Artist", "Ñollector", "Museum", "Organisation" };
 
             if (CheckInfoIsGiven(username, password, checkedRole))
             {
@@ -107,17 +107,17 @@ namespace RealArt
 
         private bool CheckUsernameIsUsed(string username, string role)
         {
-            string[] jsonLines = FileWorker.ReadFile(role);
+            string[] jsonLines = FileWorker.ReadFile(role + "s");
 
             foreach (string jsonLine in jsonLines)
             {
-                if (role == "Artists" || role == "Ñollectors")
+                if (role == "Artist" || role == "Ñollector")
                 {
                     Person? user = JsonSerializer.Deserialize<Person>(jsonLine);
                     if (user?.Username == username) return true;
                 }
 
-                else if (role == "Museums" || role == "Organisations")
+                else if (role == "Museum" || role == "Organisation")
                 {
                     Organisation? user = JsonSerializer.Deserialize<Organisation>(jsonLine);
                     if (user?.Username == username) return true;

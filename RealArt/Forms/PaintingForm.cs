@@ -8,16 +8,27 @@ namespace RealArt
     {
         private Painting? paintingInfo;
         private Auction? auctionInfo;
+        private User? userInfo;
 
-        public PaintingForm(Painting? paintingInfo = null, Auction? auctionInfo = null)
+        public PaintingForm(User userInfo, Painting? paintingInfo = null, Auction? auctionInfo = null)
         {
             InitializeComponent();
             this.paintingInfo = paintingInfo;
             this.auctionInfo = auctionInfo;
+            this.userInfo = userInfo;
         }
 
-        private void AddPaintingForm_Load(object sender, EventArgs e)
+        private void PaintingForm_Load(object sender, EventArgs e)
         {
+
+            if (userInfo != null && CurrentUser.Info.Id != userInfo.Id)
+            {
+                UploadButton.Visible = false;
+                UpdateButton.Visible = false;
+                DeleteButton.Visible = false;
+                OkButton.Visible = false;
+            }
+
             if (paintingInfo != null)
             {
                 BindingSource bindingSource = new BindingSource();

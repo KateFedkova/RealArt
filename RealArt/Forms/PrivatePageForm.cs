@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Text.Json;
+﻿using System.Text.Json;
 using RealArt.Models;
 
 namespace RealArt
@@ -8,10 +7,13 @@ namespace RealArt
     {
         private MainForm main;
 
-        public PrivatePageForm(MainForm main)
+        private User userInfo;
+
+        public PrivatePageForm(MainForm main, User userInfo)
         {
             InitializeComponent();
             this.main = main;
+            this.userInfo = userInfo;   
         }
 
         private void ToMain_Click(object sender, EventArgs e)
@@ -42,13 +44,20 @@ namespace RealArt
         private void PrivatePageForm_Load(object sender, EventArgs e)
         {
             BindingSource bindingSource = new BindingSource();
-            if (CurrentUser.Info is Person person)
+            User user = userInfo == null ? CurrentUser.Info : userInfo;
+
+            if (userInfo != null)
+            {
+                GuestElementsVisibility();
+            }
+
+            if (user is Person person)
             {
                 PersonElementsVisibility();
                 PersonSetInfo(bindingSource, person);
             }
 
-            else if (CurrentUser.Info is Organisation organisation)
+            else if (user is Organisation organisation)
             {
                 OrganisationElementsVisibility();
                 OrganisationSetInfo(bindingSource, organisation);
@@ -98,6 +107,14 @@ namespace RealArt
             BindPictures(paintingsPanel, user);
         }
 
+        private void GuestElementsVisibility()
+        {
+            AddPhotoButton.Visible = false;
+            UpdateButton.Visible = false;
+            AddPaintingButton.Visible = false;
+            AddAuctionButton.Visible = false;
+        }
+
         private void BindLabel(Label label, object source, string property)
         {
             label.DataBindings.Clear();
@@ -136,9 +153,18 @@ namespace RealArt
             if (CurrentUser.Role == "Organisation")
             {
                 List<Auction> auctions = GetAuctions(user);
+                
+                if (auctions.Count != 0)
+                {
+                    MessageLabel.Visible = false;
+                    return;
+                }
+
                 for (int i = 0; i < auctions.Count; i++)
                 {
-                    PictureBox pictureBox = CreatePictureBox(auctions[i]);
+                    Auction auction = auctions[i];
+                    PictureBox pictureBox = CreatePictureBox(auction);
+                    pictureBox.Click += (sender, e) => OnPictureBoxClick(auction);
 
                     int row = i / columnCount;
                     int col = i % columnCount;
@@ -154,6 +180,13 @@ namespace RealArt
             else
             {
                 List<Painting> paintings = GetPictures(user);
+
+                if (paintings.Count != 0)
+                {
+                    MessageLabel.Visible = false;
+                    return;
+                }
+
                 for (int i = 0; i < paintings.Count; i++)
                 {
                     Painting painting = paintings[i];
@@ -176,7 +209,7 @@ namespace RealArt
         private List<Painting> GetPictures(User user)
         {
             List<Painting> paintings = new List<Painting>();
-            string[] jsonLines = ReadFile("Painting");
+            string[] jsonLines = FileWorker.ReadFile("Paintings");
 
             foreach (Guid id in user.Pictures)
             {
@@ -197,7 +230,7 @@ namespace RealArt
         private List<Auction> GetAuctions(User user)
         {
             List<Auction> paintings = new List<Auction>();
-            string[] jsonLines = ReadFile("Auction");
+            string[] jsonLines = FileWorker.ReadFile("Auctions");
 
             foreach (Guid id in user.Pictures)
             {
@@ -242,7 +275,7 @@ namespace RealArt
             if (fileName != null)
             {
                 string role = CurrentUser.Role;
-                string[] jsonLines = ReadFile(role);
+                string[] jsonLines = FileWorker.ReadFile(role + "s");
                 List<User> users = new List<User>();
 
                 foreach (string userString in jsonLines)
@@ -270,7 +303,7 @@ namespace RealArt
                     }
                 }
 
-                UpdateInfoInFiles(role, users);
+                FileWorker.UpdateInfoInFiles(role, users);
             }
         }
 
@@ -289,51 +322,20 @@ namespace RealArt
             return fileName;
         }
 
-        private string[] ReadFile(string role)
-        {
-            string? data = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
-
-            string jsonData = File.ReadAllText(data);
-
-            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            return jsonLines;
-        }
-
-        private void UpdateInfoInFiles(string role, List<User> users)
-        {
-            string? filePath = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
-            File.WriteAllText(filePath, string.Empty);
-
-            foreach (User user in users)
-            {
-                string updatedJson = "";
-
-                if (role == "Artist" || role == "Collector")
-                {
-                    updatedJson = JsonSerializer.Serialize((Person)user);
-                }
-
-                else if (role == "Museum" || role == "Organisation")
-                {
-                    updatedJson = JsonSerializer.Serialize((Organisation)user);
-                }
-
-                File.AppendAllText(filePath, updatedJson + '\n');
-            }
-        }
-
         private void OnPictureBoxClick(object item)
         {
+            User user = userInfo == null ? CurrentUser.Info : userInfo;
             if (item is Painting painting)
             {
-                PaintingForm paintingForm = new PaintingForm(painting);
+                PaintingForm paintingForm = new PaintingForm(user, painting);
                 paintingForm.ShowDialog();
                 PrivatePageForm_Load(null, null);
             }
             else if (item is Auction auction)
             {
-                
+                AuctionForm auctionForm = new AuctionForm(user, auction);
+                auctionForm.ShowDialog();
+                PrivatePageForm_Load(null, null);
             }
         }
         
@@ -346,14 +348,14 @@ namespace RealArt
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            PaintingForm addPaintingForm = new PaintingForm();
+            PaintingForm addPaintingForm = new PaintingForm(null);
             addPaintingForm.ShowDialog();
             PrivatePageForm_Load(null, null);
         }
 
         private void AddAuctionButton_Click(object sender, EventArgs e)
         {
-            AddAuctionForm addAuctionForm = new AddAuctionForm();
+            AuctionForm addAuctionForm = new AuctionForm(null);
             addAuctionForm.ShowDialog();
             PrivatePageForm_Load(null, null);
         }

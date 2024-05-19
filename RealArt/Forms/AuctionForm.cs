@@ -4,18 +4,31 @@ using System.Text.Json;
 
 namespace RealArt
 {
-    public partial class AddAuctionForm : Form
+    public partial class AuctionForm : Form
     {
         private Auction? auctionInfo;
 
-        public AddAuctionForm(Auction? auctionInfo = null)
+        private User? userInfo;
+
+        public AuctionForm(User userInfo, Auction? auctionInfo = null)
         {
             InitializeComponent();
             this.auctionInfo = auctionInfo;
+            this.userInfo = userInfo;
         }
 
         private void AddAuctionForm_Load(object sender, EventArgs e)
         {
+            if (userInfo != null && CurrentUser.Info.Id != userInfo.Id)
+            {
+                UploadButton.Visible = false;
+                ShowPaintingsButton.Visible = false;
+                AddPaintingButton.Visible = false;
+                DeleteButton.Visible = false;
+                UpdateButton.Visible = false;
+                OkButton.Visible = false;
+            }
+
             if (auctionInfo != null)
             {
                 BindingSource bindingSource = new BindingSource();
@@ -307,13 +320,14 @@ namespace RealArt
 
         private void AddPaintingButton_Click(object sender, EventArgs e)
         {
-            PaintingForm paintingForm = new PaintingForm(null, auctionInfo);
+            PaintingForm paintingForm = new PaintingForm(null, null, auctionInfo);
             paintingForm.ShowDialog();
         }
 
         private void ShowPaintingsButton_Click(object sender, EventArgs e)
         {
-            AuctionPaintingsForm auctionPaintings = new AuctionPaintingsForm(auctionInfo);
+            User user = userInfo == null ? CurrentUser.Info : userInfo;
+            AuctionPaintingsForm auctionPaintings = new AuctionPaintingsForm(user, auctionInfo);
             auctionPaintings.ShowDialog();
         }
     }

@@ -8,9 +8,12 @@ namespace RealArt
 
         private Auction? auctionInfo;
 
-        public AuctionPaintingsForm(Auction auctionInfo)
+        private User? userInfo;
+
+        public AuctionPaintingsForm(User userInfo, Auction auctionInfo)
         {
             InitializeComponent();
+            this.userInfo = userInfo;
             this.auctionInfo = auctionInfo;
         }
        
@@ -82,7 +85,8 @@ namespace RealArt
 
         private void OnPictureBoxClick(Painting painting)
         {
-            PaintingForm paintingForm = new PaintingForm(painting);
+            User user = userInfo == null ? CurrentUser.Info : userInfo;
+            PaintingForm paintingForm = new PaintingForm(user, painting);
             paintingForm.ShowDialog();
         }
     }

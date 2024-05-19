@@ -35,7 +35,7 @@ namespace RealArt
         {
             string username = NameArea.Text;
             string password = PasswordArea.Text;
-            string[] roles = { "Artists", "Сollectors", "Museums", "Organisations" };
+            string[] roles = { "Artist", "Сollector", "Museum", "Organisation" };
 
             if (CheckInfoIsGiven(username, password))
             {
@@ -44,18 +44,17 @@ namespace RealArt
                     string? userJson = CheckUserRegistered(username, password, role);
                     if (userJson != null)
                     {
-
-                        if (role == "Artists" || role == "Сollectors")
+                        if (role == "Artist" || role == "Сollector")
                         {
                             CurrentUser.Info = JsonSerializer.Deserialize<Person?>(userJson);
-                            CurrentUser.Role = role == "Artists" ? "Artist" : "Collector";
+                            CurrentUser.Role = role == "Artist" ? "Artis" : "Collector";
                             ToMainAfterLogin();
                             return;
                         }
-                        else if (role == "Museums" || role == "Organisations")
+                        else if (role == "Museum" || role == "Organisation")
                         {
                             CurrentUser.Info = JsonSerializer.Deserialize<Organisation?>(userJson);
-                            CurrentUser.Role = role == "Museums" ? "Museum" : "Organisation";
+                            CurrentUser.Role = role == "Museum" ? "Museum" : "Organisation";
                             ToMainAfterLogin();
                             return;
                         }
@@ -88,17 +87,17 @@ namespace RealArt
             foreach (string jsonLine in jsonLines)
             {
 
-                if (role == "Artists" || role == "Сollectors")
+                if (role == "Artist" || role == "Сollector")
                 {
                     Person? user = JsonSerializer.Deserialize<Person?>(jsonLine);
-
+                    ;
                     if (user?.Username == username && VerifyPassword(password, user.Password))
                     {
                         return jsonLine;
                     }
                 }
 
-                else if (role == "Museums" || role == "Organisations")
+                else if (role == "Museum" || role == "Organisation")
                 {
                     Organisation? user = JsonSerializer.Deserialize<Organisation?>(jsonLine);
 

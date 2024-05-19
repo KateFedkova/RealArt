@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrivatePageForm));
             panel1 = new Panel();
+            AddAuctionButton = new AdditionalElements.RoundButton();
+            AddPaintingButton = new AdditionalElements.RoundButton();
             ToMain = new PictureBox();
             AboutInfoTextbox = new TextBox();
             WorkingTimeInfoLabel = new Label();
@@ -41,11 +43,11 @@
             StyleLabel = new Label();
             AboutLabel = new Label();
             CountryLabel = new Label();
-            AddButton = new AdditionalElements.RoundButton();
             UpdateButton = new AdditionalElements.RoundButton();
             AddPhotoButton = new AdditionalElements.RoundButton();
             UserPicturebox = new PictureBox();
             panel2 = new Panel();
+            MessageLabel = new Label();
             paintingsPanel = new TableLayoutPanel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ToMain).BeginInit();
@@ -58,6 +60,8 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.SeaGreen;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(AddAuctionButton);
+            panel1.Controls.Add(AddPaintingButton);
             panel1.Controls.Add(ToMain);
             panel1.Controls.Add(AboutInfoTextbox);
             panel1.Controls.Add(WorkingTimeInfoLabel);
@@ -69,14 +73,55 @@
             panel1.Controls.Add(StyleLabel);
             panel1.Controls.Add(AboutLabel);
             panel1.Controls.Add(CountryLabel);
-            panel1.Controls.Add(AddButton);
             panel1.Controls.Add(UpdateButton);
             panel1.Controls.Add(AddPhotoButton);
             panel1.Controls.Add(UserPicturebox);
             panel1.Location = new Point(0, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1079, 237);
+            panel1.Size = new Size(1079, 269);
             panel1.TabIndex = 0;
+            // 
+            // AddAuctionButton
+            // 
+            AddAuctionButton.Anchor = AnchorStyles.Right;
+            AddAuctionButton.BackColor = Color.FloralWhite;
+            AddAuctionButton.BackgroundColor = Color.FloralWhite;
+            AddAuctionButton.BorderColor = Color.Red;
+            AddAuctionButton.BorderRadius = 20;
+            AddAuctionButton.BorderSize = 0;
+            AddAuctionButton.FlatAppearance.BorderSize = 0;
+            AddAuctionButton.FlatStyle = FlatStyle.Flat;
+            AddAuctionButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            AddAuctionButton.ForeColor = Color.Black;
+            AddAuctionButton.Location = new Point(863, 205);
+            AddAuctionButton.Name = "AddAuctionButton";
+            AddAuctionButton.Size = new Size(190, 50);
+            AddAuctionButton.TabIndex = 15;
+            AddAuctionButton.Text = "Додати аукціон";
+            AddAuctionButton.TextColor = Color.Black;
+            AddAuctionButton.UseVisualStyleBackColor = false;
+            AddAuctionButton.Click += AddAuctionButton_Click;
+            // 
+            // AddPaintingButton
+            // 
+            AddPaintingButton.Anchor = AnchorStyles.Right;
+            AddPaintingButton.BackColor = Color.FloralWhite;
+            AddPaintingButton.BackgroundColor = Color.FloralWhite;
+            AddPaintingButton.BorderColor = Color.Red;
+            AddPaintingButton.BorderRadius = 20;
+            AddPaintingButton.BorderSize = 0;
+            AddPaintingButton.FlatAppearance.BorderSize = 0;
+            AddPaintingButton.FlatStyle = FlatStyle.Flat;
+            AddPaintingButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            AddPaintingButton.ForeColor = Color.Black;
+            AddPaintingButton.Location = new Point(863, 140);
+            AddPaintingButton.Name = "AddPaintingButton";
+            AddPaintingButton.Size = new Size(190, 50);
+            AddPaintingButton.TabIndex = 13;
+            AddPaintingButton.Text = "Додати картину";
+            AddPaintingButton.TextColor = Color.Black;
+            AddPaintingButton.UseVisualStyleBackColor = false;
+            AddPaintingButton.Click += AddButton_Click;
             // 
             // ToMain
             // 
@@ -94,7 +139,7 @@
             AboutInfoTextbox.BorderStyle = BorderStyle.None;
             AboutInfoTextbox.Enabled = false;
             AboutInfoTextbox.ImeMode = ImeMode.NoControl;
-            AboutInfoTextbox.Location = new Point(487, 79);
+            AboutInfoTextbox.Location = new Point(504, 79);
             AboutInfoTextbox.MaxLength = 120;
             AboutInfoTextbox.Multiline = true;
             AboutInfoTextbox.Name = "AboutInfoTextbox";
@@ -177,7 +222,7 @@
             // 
             AboutLabel.AutoSize = true;
             AboutLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            AboutLabel.Location = new Point(487, 31);
+            AboutLabel.Location = new Point(504, 31);
             AboutLabel.Name = "AboutLabel";
             AboutLabel.Size = new Size(99, 28);
             AboutLabel.TabIndex = 9;
@@ -193,26 +238,6 @@
             CountryLabel.TabIndex = 1;
             CountryLabel.Text = "Країна: ";
             // 
-            // AddButton
-            // 
-            AddButton.Anchor = AnchorStyles.Right;
-            AddButton.BackColor = Color.FloralWhite;
-            AddButton.BackgroundColor = Color.FloralWhite;
-            AddButton.BorderColor = Color.Red;
-            AddButton.BorderRadius = 20;
-            AddButton.BorderSize = 0;
-            AddButton.FlatAppearance.BorderSize = 0;
-            AddButton.FlatStyle = FlatStyle.Flat;
-            AddButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            AddButton.ForeColor = Color.Black;
-            AddButton.Location = new Point(863, 165);
-            AddButton.Name = "AddButton";
-            AddButton.Size = new Size(190, 55);
-            AddButton.TabIndex = 13;
-            AddButton.Text = "Додати картину";
-            AddButton.TextColor = Color.Black;
-            AddButton.UseVisualStyleBackColor = false;
-            // 
             // UpdateButton
             // 
             UpdateButton.Anchor = AnchorStyles.Right;
@@ -225,9 +250,9 @@
             UpdateButton.FlatStyle = FlatStyle.Flat;
             UpdateButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             UpdateButton.ForeColor = Color.Black;
-            UpdateButton.Location = new Point(863, 93);
+            UpdateButton.Location = new Point(863, 73);
             UpdateButton.Name = "UpdateButton";
-            UpdateButton.Size = new Size(190, 55);
+            UpdateButton.Size = new Size(190, 50);
             UpdateButton.TabIndex = 12;
             UpdateButton.Text = "Редагувати";
             UpdateButton.TextColor = Color.Black;
@@ -246,9 +271,9 @@
             AddPhotoButton.FlatStyle = FlatStyle.Flat;
             AddPhotoButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             AddPhotoButton.ForeColor = Color.Black;
-            AddPhotoButton.Location = new Point(863, 18);
+            AddPhotoButton.Location = new Point(863, 11);
             AddPhotoButton.Name = "AddPhotoButton";
-            AddPhotoButton.Size = new Size(190, 55);
+            AddPhotoButton.Size = new Size(190, 50);
             AddPhotoButton.TabIndex = 11;
             AddPhotoButton.Text = "Додати фото";
             AddPhotoButton.TextColor = Color.Black;
@@ -258,9 +283,10 @@
             // UserPicturebox
             // 
             UserPicturebox.Anchor = AnchorStyles.Left;
-            UserPicturebox.Location = new Point(52, 18);
+            UserPicturebox.Image = (Image)resources.GetObject("UserPicturebox.Image");
+            UserPicturebox.Location = new Point(40, 28);
             UserPicturebox.Name = "UserPicturebox";
-            UserPicturebox.Size = new Size(136, 202);
+            UserPicturebox.Size = new Size(148, 205);
             UserPicturebox.SizeMode = PictureBoxSizeMode.StretchImage;
             UserPicturebox.TabIndex = 0;
             UserPicturebox.TabStop = false;
@@ -269,11 +295,22 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.AutoScroll = true;
+            panel2.Controls.Add(MessageLabel);
             panel2.Controls.Add(paintingsPanel);
-            panel2.Location = new Point(0, 237);
+            panel2.Location = new Point(0, 270);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1079, 409);
+            panel2.Size = new Size(1079, 370);
             panel2.TabIndex = 3;
+            // 
+            // MessageLabel
+            // 
+            MessageLabel.AutoSize = true;
+            MessageLabel.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            MessageLabel.Location = new Point(230, 150);
+            MessageLabel.Name = "MessageLabel";
+            MessageLabel.Size = new Size(648, 48);
+            MessageLabel.TabIndex = 4;
+            MessageLabel.Text = "Жодної  інформації не було знайдено";
             // 
             // paintingsPanel
             // 
@@ -319,7 +356,7 @@
         private PictureBox UserPicturebox;
         private AdditionalElements.RoundButton AddPhotoButton;
         private AdditionalElements.RoundButton UpdateButton;
-        private AdditionalElements.RoundButton AddButton;
+        private AdditionalElements.RoundButton AddPaintingButton;
         private Label CountryLabel;
         private Label AboutLabel;
         private Label StyleLabel;
@@ -333,5 +370,7 @@
         private Panel panel2;
         private PictureBox ToMain;
         private TableLayoutPanel paintingsPanel;
+        private AdditionalElements.RoundButton AddAuctionButton;
+        private Label MessageLabel;
     }
 }

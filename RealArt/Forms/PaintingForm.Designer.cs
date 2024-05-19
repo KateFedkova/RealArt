@@ -335,7 +335,7 @@
             Name = "PaintingForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Load += AddPaintingForm_Load;
+            Load += PaintingForm_Load;
             ((System.ComponentModel.ISupportInitialize)PaintingPictureBox).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
