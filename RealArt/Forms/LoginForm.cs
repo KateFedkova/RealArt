@@ -83,7 +83,7 @@ namespace RealArt
 
         private string? CheckUserRegistered(string username, string password, string role)
         {
-            string[] jsonLines = ReadFile(role + "s");
+            string[] jsonLines = FileWorker.ReadFile(role + "s");
 
             foreach (string jsonLine in jsonLines)
             {

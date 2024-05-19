@@ -1,4 +1,5 @@
 using System.Configuration;
+using System.Data;
 using System.Text.Json;
 using RealArt.Models;
 
@@ -25,11 +26,19 @@ namespace RealArt
             this.Close();
         }
 
+        private void ToMainAfterRegistration()
+        {
+            MainForm main = new MainForm();
+            main.Show();
+            this.Close();
+        }
+
         private void SignupButton_Click(object sender, EventArgs e)
         {
             string username = NameArea.Text;
             string password = PasswordArea.Text;
             string checkedRole = GetSelectedRole();
+            string[] roles = { "Artists", "—ollectors", "Museums", "Organisations" };
 
             if (CheckInfoIsGiven(username, password, checkedRole))
             {
@@ -38,23 +47,38 @@ namespace RealArt
 
                 password = HashPassword(password);
 
-                if (!CheckUsernameIsUsed(username, checkedRole))
+                foreach (string role in roles)
                 {
-                    var user = CreatePersonOrOrganisation(username, password, checkedRole);
-
-                    if (user != null)
+                    if (CheckUsernameIsUsed(username, role))
                     {
-                        json = JsonSerializer.Serialize(user);
-                        path = GetPathForRole(checkedRole);
-                        File.AppendAllText(path, json + '\n');
+                        MessageBox.Show("¡Û‰¸ Î‡ÒÍ‡ Ó·Â≥Ú¸ ≥Ì¯ËÈ username");
+                        return;
                     }
                 }
+                
+                var user = CreatePersonOrOrganisation(username, password, checkedRole);
 
-                else
+                if (user != null)
                 {
-                    MessageBox.Show("¡Û‰¸ Î‡ÒÍ‡ Ó·Â≥Ú¸ ≥Ì¯ËÈ username");
-                    return;
-                }
+                    json = JsonSerializer.Serialize(user);
+                    path = GetPathForRole(checkedRole);
+                    File.AppendAllText(path, json + '\n');
+
+                    if (user is Person)
+                    {
+                        CurrentUser.Info = (Person) user;
+                        CurrentUser.Role = checkedRole == "Artists" ? "Artist" : "Collector";
+                        ToMainAfterRegistration();
+                        return;
+                    }
+                    else if (user is Organisation)
+                    {
+                        CurrentUser.Info = (Organisation) user;
+                        CurrentUser.Role = checkedRole == "Museums" ? "Museum" : "Organisation";
+                        ToMainAfterRegistration();
+                        return;
+                    }
+                }      
             }
 
             else
@@ -83,35 +107,24 @@ namespace RealArt
 
         private bool CheckUsernameIsUsed(string username, string role)
         {
-            string[] jsonLines = ReadFile(role);
+            string[] jsonLines = FileWorker.ReadFile(role);
 
             foreach (string jsonLine in jsonLines)
             {
                 if (role == "Artists" || role == "—ollectors")
                 {
-                    Person user = JsonSerializer.Deserialize<Person>(jsonLine);
-                    if (user.Username == username) return true;
+                    Person? user = JsonSerializer.Deserialize<Person>(jsonLine);
+                    if (user?.Username == username) return true;
                 }
-                
+
                 else if (role == "Museums" || role == "Organisations")
                 {
-                    Organisation user = JsonSerializer.Deserialize<Organisation>(jsonLine);
-                    if (user.Username == username) return true;
+                    Organisation? user = JsonSerializer.Deserialize<Organisation>(jsonLine);
+                    if (user?.Username == username) return true;
                 }
             }
 
             return false;
-        }
-
-        private string[] ReadFile(string role)
-        {
-            string? data = ConfigurationManager.AppSettings["PathTo" + role + "Data"];
-
-            string jsonData = File.ReadAllText(data);
-
-            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            
-            return jsonLines;
         }
 
         private object? CreatePersonOrOrganisation(string username, string password, string role)
