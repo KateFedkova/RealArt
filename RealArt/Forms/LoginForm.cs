@@ -1,5 +1,4 @@
 ﻿using RealArt.Models;
-using System.Configuration;
 using System.Text.Json;
 
 namespace RealArt
@@ -48,15 +47,15 @@ namespace RealArt
 
                         if (role == "Artists" || role == "Сollectors")
                         {
-                            CurrentUser<Person>.Info = JsonSerializer.Deserialize<Person?>(userJson);
-                            CurrentUser<Person>.Role = role == "Artists" ? "Artist" : "Collector";
+                            CurrentUser.Info = JsonSerializer.Deserialize<Person?>(userJson);
+                            CurrentUser.Role = role == "Artists" ? "Artist" : "Collector";
                             ToMainAfterLogin();
                             return;
                         }
                         else if (role == "Museums" || role == "Organisations")
                         {
-                            CurrentUser<Organisation>.Info = JsonSerializer.Deserialize<Organisation?>(userJson);
-                            CurrentUser<Organisation>.Role = role == "Museums" ? "Museum" : "Organisation";
+                            CurrentUser.Info = JsonSerializer.Deserialize<Organisation?>(userJson);
+                            CurrentUser.Role = role == "Museums" ? "Museum" : "Organisation";
                             ToMainAfterLogin();
                             return;
                         }
@@ -84,7 +83,7 @@ namespace RealArt
 
         private string? CheckUserRegistered(string username, string password, string role)
         {
-            string[] jsonLines = ReadFile(role);
+            string[] jsonLines = ReadFile(role + "s");
 
             foreach (string jsonLine in jsonLines)
             {
@@ -111,17 +110,6 @@ namespace RealArt
             }
 
             return null;
-        }
-
-        private string[] ReadFile(string role)
-        { 
-            string? data = ConfigurationManager.AppSettings["PathTo" + role + "Data"];
-
-            string jsonData = File.ReadAllText(data);
-
-            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            return jsonLines;
         }
 
         private bool VerifyPassword(string password, string passwordHash)
