@@ -43,6 +43,7 @@
             CancelButton = new AdditionalElements.RoundButton();
             OkButton = new AdditionalElements.RoundButton();
             UploadButton = new AdditionalElements.RoundButton();
+            ShowPaintingsButton = new AdditionalElements.RoundButton();
             ((System.ComponentModel.ISupportInitialize)PaintingPictureBox).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -100,6 +101,7 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(ShowPaintingsButton);
             panel1.Controls.Add(AddPaintingButton);
             panel1.Controls.Add(DeleteButton);
             panel1.Controls.Add(UpdateButton);
@@ -260,6 +262,27 @@
             UploadButton.UseVisualStyleBackColor = false;
             UploadButton.Click += UploadButton_Click;
             // 
+            // ShowPaintingsButton
+            // 
+            ShowPaintingsButton.BackColor = Color.MediumSlateBlue;
+            ShowPaintingsButton.BackgroundColor = Color.MediumSlateBlue;
+            ShowPaintingsButton.BorderColor = Color.Red;
+            ShowPaintingsButton.BorderRadius = 0;
+            ShowPaintingsButton.BorderSize = 0;
+            ShowPaintingsButton.DialogResult = DialogResult.OK;
+            ShowPaintingsButton.FlatAppearance.BorderSize = 0;
+            ShowPaintingsButton.FlatStyle = FlatStyle.Flat;
+            ShowPaintingsButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ShowPaintingsButton.ForeColor = Color.White;
+            ShowPaintingsButton.Location = new Point(318, 507);
+            ShowPaintingsButton.Name = "ShowPaintingsButton";
+            ShowPaintingsButton.Size = new Size(192, 45);
+            ShowPaintingsButton.TabIndex = 13;
+            ShowPaintingsButton.Text = "Дивитися картини";
+            ShowPaintingsButton.TextColor = Color.White;
+            ShowPaintingsButton.UseVisualStyleBackColor = false;
+            ShowPaintingsButton.Click += ShowPaintingsButton_Click;
+            // 
             // AddAuctionForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -296,5 +319,6 @@
         private AdditionalElements.RoundButton AddPaintingButton;
         private AdditionalElements.RoundButton DeleteButton;
         private AdditionalElements.RoundButton UpdateButton;
+        private AdditionalElements.RoundButton ShowPaintingsButton;
     }
 }

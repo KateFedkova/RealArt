@@ -30,6 +30,7 @@ namespace RealArt
                 AddPaintingButton.Visible = false;
                 UpdateButton.Visible = false;
                 DeleteButton.Visible = false;
+                ShowPaintingsButton.Visible = false;
             }
         }
 
@@ -261,14 +262,14 @@ namespace RealArt
         {
             string role = CurrentUser.Role;
             RemoveAuctionFromOwner(role, auctionInfo.Id);
-            
+
             List<Auction> auctions = ChooseAuctions();
             string? filePath = ConfigurationManager.AppSettings["PathToAuctionsData"];
             AppendToFileList(filePath, auctions);
 
-            DeleteAuctionPaintings();    
+            DeleteAuctionPaintings();
         }
-        
+
 
         private List<Auction> ChooseAuctions()
         {
@@ -308,6 +309,12 @@ namespace RealArt
         {
             PaintingForm paintingForm = new PaintingForm(null, auctionInfo);
             paintingForm.ShowDialog();
+        }
+
+        private void ShowPaintingsButton_Click(object sender, EventArgs e)
+        {
+            AuctionPaintingsForm auctionPaintings = new AuctionPaintingsForm(auctionInfo);
+            auctionPaintings.ShowDialog();
         }
     }
 }
