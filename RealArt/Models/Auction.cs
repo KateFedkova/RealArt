@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace RealArt.Models
 {
-    internal class Auction
+    public class Auction
     {
-        public readonly Guid ID;
+        public Guid Id { get; private set; }
 
         public string Name { get; set; }
 
@@ -16,15 +12,27 @@ namespace RealArt.Models
 
         public string Time { get; set; }
 
-        public List<Painting> Pictures { get; set; }
+        public string Owner { get; set; }
 
-        public Auction(string name, string date, string time)
+        public string Photo { get; set; }
+
+        public List<Guid> Pictures { get; set; }
+
+        public Auction(string name, string date, string time, string owner, string photo)
         {
-            ID = Guid.NewGuid();
+            Id = Guid.NewGuid();
             Name = name;
             Date = date;
             Time = time;
-            Pictures = new List<Painting>();
+            Owner = owner;
+            Photo = photo;
+            Pictures = new List<Guid>();
+        }
+
+        [JsonConstructor]
+        public Auction(Guid id, string name, string date, string time, string owner, string photo) : this(name, date, time, owner, photo)
+        {
+            Id = id;
         }
     }
 }

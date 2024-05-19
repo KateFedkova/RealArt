@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
+using System.Text.Json.Serialization;
 
 namespace RealArt.Models
 {
-    internal class User
+    public class User
     {
-        public readonly Guid Id;
+        public Guid Id { get; private set; }
 
         public string Username { get; set; }
         
@@ -17,8 +14,8 @@ namespace RealArt.Models
         public string? Country { get; set; }
         
         public string? About { get; set; }
-        
-        public string? Foto { get; set; }
+
+        public string? Photo { get; set; } = ConfigurationManager.AppSettings["ImageNotFound"];
 
         public List<Guid> Pictures { get; set; }
         
@@ -29,7 +26,11 @@ namespace RealArt.Models
             Password = password;
             Pictures = new List<Guid>();
         }
-    }
 
-    
+        [JsonConstructor]
+        public User(Guid id, string username, string password) : this(username, password)
+        {
+            Id = id;
+        }
+    }
 }
