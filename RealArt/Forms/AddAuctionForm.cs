@@ -95,7 +95,7 @@ namespace RealArt
 
             if (auctionInfo == null && CheckInfoIsGiven(title, date, time, photo))
             {
-                if (DateTime.Parse(date) >= DateTime.Now)
+                if (DateTime.Parse(date).Date >= DateTime.Now.Date)
                 {
                     Auction auction = new Auction(title, date, time, CurrentUser.Info.Username, photo);
                     AddAuctionToOwner(auction.Id);
@@ -306,7 +306,7 @@ namespace RealArt
 
         private void AddPaintingButton_Click(object sender, EventArgs e)
         {
-            PaintingForm paintingForm = new PaintingForm();
+            PaintingForm paintingForm = new PaintingForm(null, auctionInfo);
             paintingForm.ShowDialog();
         }
     }

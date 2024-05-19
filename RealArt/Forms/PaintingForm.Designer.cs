@@ -187,7 +187,7 @@
             DeleteButton.Location = new Point(752, 511);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.Size = new Size(140, 45);
-            DeleteButton.TabIndex = 18;
+            DeleteButton.TabIndex = 16;
             DeleteButton.Text = "Видалити";
             DeleteButton.TextColor = Color.White;
             DeleteButton.UseVisualStyleBackColor = false;
@@ -207,7 +207,7 @@
             UpdateButton.Location = new Point(594, 511);
             UpdateButton.Name = "UpdateButton";
             UpdateButton.Size = new Size(130, 45);
-            UpdateButton.TabIndex = 17;
+            UpdateButton.TabIndex = 15;
             UpdateButton.Text = "Змінити";
             UpdateButton.TextColor = Color.White;
             UpdateButton.UseVisualStyleBackColor = false;
@@ -236,7 +236,7 @@
             CancelButton.Location = new Point(921, 511);
             CancelButton.Name = "CancelButton";
             CancelButton.Size = new Size(140, 45);
-            CancelButton.TabIndex = 16;
+            CancelButton.TabIndex = 18;
             CancelButton.Text = "Відміна";
             CancelButton.TextColor = Color.White;
             CancelButton.UseVisualStyleBackColor = false;
@@ -256,7 +256,7 @@
             OkButton.Location = new Point(752, 511);
             OkButton.Name = "OkButton";
             OkButton.Size = new Size(130, 45);
-            OkButton.TabIndex = 15;
+            OkButton.TabIndex = 17;
             OkButton.Text = "Ок";
             OkButton.TextColor = Color.White;
             OkButton.UseVisualStyleBackColor = false;
@@ -322,7 +322,7 @@
             ArtistLabel.TabIndex = 11;
             ArtistLabel.Text = "Художник";
             // 
-            // AddPaintingForm
+            // PaintingForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -332,7 +332,7 @@
             FormBorderStyle = FormBorderStyle.None;
             MaximumSize = new Size(1100, 601);
             MinimumSize = new Size(1100, 601);
-            Name = "AddPaintingForm";
+            Name = "PaintingForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Load += AddPaintingForm_Load;

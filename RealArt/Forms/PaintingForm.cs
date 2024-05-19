@@ -7,11 +7,13 @@ namespace RealArt
     public partial class PaintingForm : Form
     {
         private Painting? paintingInfo;
+        private Auction? auctionInfo;
 
-        public PaintingForm(Painting? paintingInfo = null)
+        public PaintingForm(Painting? paintingInfo = null, Auction? auctionInfo = null)
         {
             InitializeComponent();
             this.paintingInfo = paintingInfo;
+            this.auctionInfo = auctionInfo;
         }
 
         private void AddPaintingForm_Load(object sender, EventArgs e)
@@ -92,7 +94,7 @@ namespace RealArt
 
         private List<string> GetAllArtists()
         {
-            string[] jsonLines = ReadFile("Artist");
+            string[] jsonLines = FileWorker.ReadFile("Artists");
 
             List<string> data = new List<string>();
 
@@ -241,15 +243,23 @@ namespace RealArt
                 }
             }
 
-            AddPaintingToOwner(CurrentUser.Role, painting.Id);
+            if (auctionInfo == null)
+            {
+                AddPaintingToOwner(CurrentUser.Role, painting.Id);
+            }
+
+            else
+            {
+                AddPaintingToAuction(painting.Id);
+            }
 
             string? filePath = ConfigurationManager.AppSettings["PathToPaintingsData"];
-            AppendToFile(filePath, painting);
+            FileWorker.AppendToFile(filePath, painting);
         }
 
         private void UpdatePainting(string title, string style, string date, string type, float? price, string photo)
         {
-            string[] jsonLines = ReadFile("Painting");
+            string[] jsonLines = FileWorker.ReadFile("Paintings");
             List<Painting> paintings = new List<Painting>();
 
             foreach (string paintingString in jsonLines)
@@ -273,35 +283,13 @@ namespace RealArt
             }
 
             string? filePath = ConfigurationManager.AppSettings["PathToPaintingsData"];
-            AppendToFileList(filePath, paintings);
-        }
-        
-        private void AppendToFile(string filePath, Painting painting)
-        {
-            string? path = filePath;
-            string json = JsonSerializer.Serialize(painting);
-
-            if (path != null)
-            {
-                File.AppendAllText(path, json + '\n');
-            }
-        }
-
-        private void AppendToFileList(string filePath, List<Painting> paintings)
-        {
-            File.WriteAllText(filePath, string.Empty);
-
-            foreach (Painting painting in paintings)
-            {
-                string updatedJson = JsonSerializer.Serialize(painting);
-                File.AppendAllText(filePath, updatedJson + '\n');
-            }
+            FileWorker.AppendToFilePaintings(filePath, paintings);
         }
         
         private void AddPaintingToOwner(string role, Guid PaintingId)
         {
             CurrentUser.Info.Pictures.Add(PaintingId);
-            string[] jsonLines = ReadFile(role + "s");
+            string[] jsonLines = FileWorker.ReadFile(role + "s");
             List<User> users = new List<User>();
 
             foreach (string userString in jsonLines)
@@ -329,41 +317,89 @@ namespace RealArt
                 }
             }
 
-            UpdateInfoInFiles(role, users);
+            FileWorker.UpdateInfoInFiles(role, users);
         }
 
-        private string[] ReadFile(string role)
+        private void AddPaintingToAuction(Guid PaintingId)
         {
-            string? data = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
+            auctionInfo.Pictures.Add(PaintingId);
+            string[] jsonLines = FileWorker.ReadFile("Auctions");
+            List<Auction> auctions = new List<Auction>();
 
-            string jsonData = File.ReadAllText(data);
-
-            string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            return jsonLines;
-        }
-
-        private void UpdateInfoInFiles(string role, List<User> users)
-        {
-            string? filePath = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
-            File.WriteAllText(filePath, string.Empty);
-
-            foreach (User user in users)
+            foreach (string auctionString in jsonLines)
             {
-                string updatedJson = "";
+                Auction? auction = JsonSerializer.Deserialize<Auction?>(auctionString);
+
+                if (auction?.Id == auctionInfo.Id)
+                {
+                    auction.Pictures.Add(PaintingId);
+                }
+
+                if (auction != null)
+                {
+                    auctions.Add(auction);
+                }
+            }
+
+            FileWorker.UpdateInfoInAuctions(auctions);
+        }
+
+        private void RemovePaintingFromOwner(string role, Guid paintingId)
+        {
+            CurrentUser.Info.Pictures.Remove(paintingInfo.Id);
+            string[] jsonLines = FileWorker.ReadFile(role + "s");
+            List<User> users = new List<User>();
+
+            foreach (string userString in jsonLines)
+            {
+                User? user = null;
 
                 if (role == "Artist" || role == "Collector")
                 {
-                    updatedJson = JsonSerializer.Serialize((Person)user);
+                    user = JsonSerializer.Deserialize<Person?>(userString);
                 }
 
                 else if (role == "Museum" || role == "Organisation")
                 {
-                    updatedJson = JsonSerializer.Serialize((Organisation)user);
+                    user = JsonSerializer.Deserialize<Organisation?>(userString);
                 }
 
-                File.AppendAllText(filePath, updatedJson + '\n');
+                if (user?.Id == CurrentUser.Info.Id)
+                {
+                    user.Pictures.Remove(paintingInfo.Id);
+                }
+
+                if (user != null)
+                {
+                    users.Add(user);
+                }
+
+                FileWorker.UpdateInfoInFiles(role, users);
             }
+        }    
+
+        private void RemovePaintingFromAuction()
+        {
+            auctionInfo.Pictures.Remove(paintingInfo.Id);
+            string[] jsonLines = FileWorker.ReadFile("Auctions");
+            List<Auction> auctions = new List<Auction>();
+
+            foreach (string auctionString in jsonLines)
+            {
+                Auction? auction = JsonSerializer.Deserialize<Auction?>(auctionString);
+
+                if (auction?.Id == auctionInfo.Id)
+                {
+                    auction.Pictures.Add(paintingInfo.Id);
+                }
+
+                if (auction != null)
+                {
+                    auctions.Add(auction);
+                }
+            }
+
+            FileWorker.UpdateInfoInAuctions(auctions);
         }
 
         private void UpdateButton_Click(object sender, EventArgs e)
@@ -384,48 +420,23 @@ namespace RealArt
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            if (paintingInfo != null)
+            string? filePath = ConfigurationManager.AppSettings["PathToPaintingsData"];
+            List<Painting> paintings = ChoosePaintings();
+            FileWorker.AppendToFilePaintings(filePath, paintings);
+            
+            if (auctionInfo == null)
             {
-                List<Painting> paintings = ChoosePaintings();
-                string? filePath = ConfigurationManager.AppSettings["PathToPaintingsData"];
-                AppendToFileList(filePath, paintings);
-                
-                string role = CurrentUser.Role;
-                string[] jsonLines = ReadFile(role);
-                List<User> users = new List<User>();
+                RemovePaintingFromOwner(CurrentUser.Role, paintingInfo.Id);
+            }
 
-                foreach (string userString in jsonLines)
-                {
-                    User? user = null;
-
-                    if (role == "Artist" || role == "Collector")
-                    {
-                        user = JsonSerializer.Deserialize<Person?>(userString);
-                    }
-
-                    else if (role == "Museum" || role == "Organisation")
-                    {
-                        user = JsonSerializer.Deserialize<Organisation?>(userString);
-                    }
-
-                    if (user?.Id == CurrentUser.Info.Id)
-                    {
-                        user.Pictures.Remove(paintingInfo.Id);
-                    }
-
-                    if (user != null)
-                    {
-                        users.Add(user);
-                    }
-                }
-
-                UpdateInfoInFiles(role, users);
+            else
+            {
+                RemovePaintingFromAuction();
             }
         }
-
         private List<Painting> ChoosePaintings()
         {
-            string[] jsonLines = ReadFile("Painting");
+            string[] jsonLines = FileWorker.ReadFile("Paintings");
             List<Painting> paintings = new List<Painting>();
 
             foreach (string paintingString in jsonLines)
