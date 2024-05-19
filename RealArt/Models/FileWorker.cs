@@ -5,9 +5,19 @@ namespace RealArt.Models
 {
     public static class FileWorker
     {
+
+        public static string GetPath(string role)
+        {
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string projectRoot = Path.GetFullPath(Path.Combine(baseDirectory, @"..\..\.."));
+            string? data = ConfigurationManager.AppSettings["PathTo" + role + "Data"];
+            string pathData = Path.Combine(projectRoot, data);
+            return pathData; 
+        }
+
         public static string[] ReadFile(string role)
         {
-            string? data = ConfigurationManager.AppSettings["PathTo" + role + "Data"];
+            string? data = GetPath(role);
             string jsonData = File.ReadAllText(data);
             string[] jsonLines = jsonData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
             return jsonLines;
@@ -15,7 +25,7 @@ namespace RealArt.Models
 
         public static void UpdateInfoInFiles(string role, List<User> users)
         {
-            string? filePath = ConfigurationManager.AppSettings["PathTo" + role + "s" + "Data"];
+            string? filePath = GetPath(role + "s");
 
             if (filePath != null)
             {
@@ -42,7 +52,7 @@ namespace RealArt.Models
 
         public static void UpdateInfoInAuctions(List<Auction> auctions)
         {
-            string? filePath = ConfigurationManager.AppSettings["PathToAuctionsData"];
+            string? filePath = GetPath("Auctions");
 
             if (filePath != null)
             {
@@ -56,9 +66,9 @@ namespace RealArt.Models
             }
         }
 
-        public static void AppendToFile(string filePath, object item)
+        public static void AppendToFile(string file, object item)
         {
-            string? path = filePath;
+            string? path = GetPath(file);
             string json = JsonSerializer.Serialize(item);
 
             if (path != null)
@@ -67,8 +77,10 @@ namespace RealArt.Models
             }
         }
 
-        public static void AppendToFilePaintings(string filePath, List<Painting> paintings)
+        public static void AppendToFilePaintings(string file, List<Painting> paintings)
         {
+            string filePath = GetPath(file);
+
             if (filePath != null)
             {
                 File.WriteAllText(filePath, string.Empty);
