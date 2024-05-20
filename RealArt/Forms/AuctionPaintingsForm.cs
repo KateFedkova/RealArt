@@ -45,7 +45,7 @@ namespace RealArt
 
                     if (col == columnCount - 1)
                     {
-                        tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
+                        tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 320));
                         tableLayoutPanel.RowCount++;
                     }
                 }

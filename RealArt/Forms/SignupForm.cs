@@ -1,5 +1,3 @@
-using System.Configuration;
-using System.Data;
 using System.Text.Json;
 using RealArt.Models;
 
@@ -38,7 +36,7 @@ namespace RealArt
             string username = NameArea.Text;
             string password = PasswordArea.Text;
             string checkedRole = GetSelectedRole();
-            string[] roles = { "Artist", "Ñollector", "Museum", "Organisation" };
+            string[] roles = { "Artist", "Collector", "Museum", "Organisation" };
 
             if (CheckInfoIsGiven(username, password, checkedRole))
             {
@@ -99,7 +97,7 @@ namespace RealArt
         private string? GetSelectedRole()
         {
             if (ArtistRadio.Checked) return "Artists";
-            else if (ÑollectorRadio.Checked) return "Ñollectors";
+            else if (ÑollectorRadio.Checked) return "Collectors";
             else if (MuseumRadio.Checked) return "Museums";
             else if (OrganisationRadio.Checked) return "Organisations";
             return null;
@@ -111,7 +109,7 @@ namespace RealArt
 
             foreach (string jsonLine in jsonLines)
             {
-                if (role == "Artist" || role == "Ñollector")
+                if (role == "Artist" || role == "Collector")
                 {
                     Person? user = JsonSerializer.Deserialize<Person>(jsonLine);
                     if (user?.Username == username) return true;
@@ -132,7 +130,7 @@ namespace RealArt
             switch (role)
             {
                 case "Artists":
-                case "Ñollectors":
+                case "Collectors":
                     return new Person(username, password);
                 case "Museums":
                 case "Organisations":
@@ -148,8 +146,8 @@ namespace RealArt
             {
                 case "Artists":
                     return FileWorker.GetPath("Artists");
-                case "Ñollectors":
-                    return FileWorker.GetPath("Ñollectors");
+                case "Collectors":
+                    return FileWorker.GetPath("Collectors");
                 case "Museums":
                     return FileWorker.GetPath("Museums");
                 case "Organisations":

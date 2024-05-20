@@ -7,7 +7,7 @@ namespace RealArt
     {
         public MainForm()
         {
-            InitializeComponent();   
+            InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -20,7 +20,7 @@ namespace RealArt
             int formWidth = this.ClientSize.Width;
             int minWidth = this.MinimumSize.Width;
             int newWidth = Math.Max(minWidth, formWidth);
-            int rowHeight = formWidth >= 1500 ? 600 : 280;
+            int rowHeight = formWidth >= 1500 ? 600 : 320;
             float widthRatio = (float)newWidth / itemsPanel.Size.Width;
 
             itemsPanel.Size = new Size((int)(itemsPanel.Size.Width * widthRatio), itemsPanel.RowCount * rowHeight);
@@ -65,12 +65,14 @@ namespace RealArt
         private void UpdateUI()
         {
             itemsPanel.Visible = false;
+
             if (CurrentUser.Info != null)
             {
                 ToSignup.Visible = false;
                 ToLogin.Visible = false;
                 ToLogout.Visible = true;
                 ToPage.Visible = true;
+                ToPage.ImageLocation = CurrentUser.Info.Photo;
             }
             else
             {
@@ -92,7 +94,7 @@ namespace RealArt
 
         private void CollectorsButton_Click(object sender, EventArgs e)
         {
-            List<User> people = GetUsers("Сollector");
+            List<User> people = GetUsers("Collector");
             QuoteLabel.Visible = false;
             QuotePicturebox.Visible = false;
             itemsPanel.Visible = true;
@@ -136,7 +138,7 @@ namespace RealArt
 
                 if (col == columnCount - 1)
                 {
-                    tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
+                    tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 320));
                     tableLayoutPanel.RowCount++;
                 }
             }

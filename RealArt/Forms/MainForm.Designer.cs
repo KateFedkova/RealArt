@@ -72,6 +72,7 @@
             ToPage.Location = new Point(781, 12);
             ToPage.Name = "ToPage";
             ToPage.Size = new Size(91, 80);
+            ToPage.SizeMode = PictureBoxSizeMode.StretchImage;
             ToPage.TabIndex = 5;
             ToPage.TabStop = false;
             ToPage.Click += ToPage_Click;
@@ -269,13 +270,13 @@
             itemsPanel.AutoSize = true;
             itemsPanel.ColumnCount = 3;
             itemsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            itemsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            itemsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            itemsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            itemsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             itemsPanel.Location = new Point(81, 27);
             itemsPanel.Name = "itemsPanel";
             itemsPanel.RowCount = 1;
-            itemsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280F));
-            itemsPanel.Size = new Size(904, 280);
+            itemsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 320F));
+            itemsPanel.Size = new Size(904, 320);
             itemsPanel.TabIndex = 11;
             // 
             // QuotePicturebox

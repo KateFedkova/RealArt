@@ -27,7 +27,7 @@ namespace RealArt
             int formWidth = this.ClientSize.Width;
             int minWidth = this.MinimumSize.Width;
             int newWidth = Math.Max(minWidth, formWidth);
-            int rowHeight = formWidth >= 1500 ? 600 : 280;
+            int rowHeight = formWidth >= 1500 ? 600 : 320;
             float widthRatio = (float)newWidth / paintingsPanel.Size.Width;
 
             paintingsPanel.Size = new Size((int)(paintingsPanel.Size.Width * widthRatio), paintingsPanel.RowCount * rowHeight);
@@ -98,7 +98,6 @@ namespace RealArt
         private void OrganisationSetInfo(BindingSource source, Organisation user)
         {
             source.DataSource = user;
-
             BindLabel(CountryInfoLabel, source, "Country");
             BindLabel(AddressInfoLabel, source, "Address");
             BindLabel(WorkingTimeInfoLabel, source, "Time");
@@ -149,31 +148,30 @@ namespace RealArt
             tableLayoutPanel.Controls.Clear();
             tableLayoutPanel.RowCount = 0;
             int columnCount = 3;
-            
+
             if (CurrentUser.Role == "Organisation")
             {
                 List<Auction> auctions = GetAuctions(user);
-                
+
                 if (auctions.Count != 0)
                 {
                     MessageLabel.Visible = false;
-                    return;
-                }
 
-                for (int i = 0; i < auctions.Count; i++)
-                {
-                    Auction auction = auctions[i];
-                    PictureBox pictureBox = CreatePictureBox(auction);
-                    pictureBox.Click += (sender, e) => OnPictureBoxClick(auction);
-
-                    int row = i / columnCount;
-                    int col = i % columnCount;
-                    tableLayoutPanel.Controls.Add(pictureBox, col, row);
-
-                    if (col == columnCount - 1)
+                    for (int i = 0; i < auctions.Count; i++)
                     {
-                        tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
-                        tableLayoutPanel.RowCount++;
+                        Auction auction = auctions[i];
+                        PictureBox pictureBox = CreatePictureBox(auction);
+                        pictureBox.Click += (sender, e) => OnPictureBoxClick(auction);
+
+                        int row = i / columnCount;
+                        int col = i % columnCount;
+                        tableLayoutPanel.Controls.Add(pictureBox, col, row);
+
+                        if (col == columnCount - 1)
+                        {
+                            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 320));
+                            tableLayoutPanel.RowCount++;
+                        }
                     }
                 }
             }
@@ -184,23 +182,22 @@ namespace RealArt
                 if (paintings.Count != 0)
                 {
                     MessageLabel.Visible = false;
-                    return;
-                }
 
-                for (int i = 0; i < paintings.Count; i++)
-                {
-                    Painting painting = paintings[i];
-                    PictureBox pictureBox = CreatePictureBox(painting);
-                    pictureBox.Click += (sender, e) => OnPictureBoxClick(painting);
-
-                    int row = i / columnCount;
-                    int col = i % columnCount;
-                    tableLayoutPanel.Controls.Add(pictureBox, col, row);
-
-                    if (col == columnCount - 1)
+                    for (int i = 0; i < paintings.Count; i++)
                     {
-                        tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280));
-                        tableLayoutPanel.RowCount++;
+                        Painting painting = paintings[i];
+                        PictureBox pictureBox = CreatePictureBox(painting);
+                        pictureBox.Click += (sender, e) => OnPictureBoxClick(painting);
+
+                        int row = i / columnCount;
+                        int col = i % columnCount;
+                        tableLayoutPanel.Controls.Add(pictureBox, col, row);
+
+                        if (col == columnCount - 1)
+                        {
+                            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 320));
+                            tableLayoutPanel.RowCount++;
+                        }
                     }
                 }
             }
@@ -275,6 +272,7 @@ namespace RealArt
             if (fileName != null)
             {
                 string role = CurrentUser.Role;
+                CurrentUser.Info.Photo = fileName;
                 string[] jsonLines = FileWorker.ReadFile(role + "s");
                 List<User> users = new List<User>();
 

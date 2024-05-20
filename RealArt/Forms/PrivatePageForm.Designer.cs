@@ -250,7 +250,7 @@
             UpdateButton.FlatStyle = FlatStyle.Flat;
             UpdateButton.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
             UpdateButton.ForeColor = Color.Black;
-            UpdateButton.Location = new Point(863, 73);
+            UpdateButton.Location = new Point(863, 75);
             UpdateButton.Name = "UpdateButton";
             UpdateButton.Size = new Size(190, 50);
             UpdateButton.TabIndex = 12;
@@ -318,13 +318,13 @@
             paintingsPanel.AutoSize = true;
             paintingsPanel.ColumnCount = 3;
             paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             paintingsPanel.Location = new Point(82, 43);
             paintingsPanel.Name = "paintingsPanel";
             paintingsPanel.RowCount = 1;
-            paintingsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280F));
-            paintingsPanel.Size = new Size(904, 280);
+            paintingsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 320F));
+            paintingsPanel.Size = new Size(904, 320);
             paintingsPanel.TabIndex = 1;
             // 
             // PrivatePageForm

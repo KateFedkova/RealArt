@@ -40,13 +40,13 @@
             paintingsPanel.AutoSize = true;
             paintingsPanel.ColumnCount = 3;
             paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            paintingsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             paintingsPanel.Location = new Point(83, 61);
             paintingsPanel.Name = "paintingsPanel";
             paintingsPanel.RowCount = 1;
-            paintingsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 280F));
-            paintingsPanel.Size = new Size(916, 280);
+            paintingsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 320F));
+            paintingsPanel.Size = new Size(916, 320);
             paintingsPanel.TabIndex = 2;
             // 
             // panel1

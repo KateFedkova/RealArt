@@ -35,7 +35,7 @@ namespace RealArt
         {
             string username = NameArea.Text;
             string password = PasswordArea.Text;
-            string[] roles = { "Artist", "Сollector", "Museum", "Organisation" };
+            string[] roles = { "Artist", "Collector", "Museum", "Organisation" };
 
             if (CheckInfoIsGiven(username, password))
             {
@@ -44,10 +44,10 @@ namespace RealArt
                     string? userJson = CheckUserRegistered(username, password, role);
                     if (userJson != null)
                     {
-                        if (role == "Artist" || role == "Сollector")
+                        if (role == "Artist" || role == "Collector")
                         {
                             CurrentUser.Info = JsonSerializer.Deserialize<Person?>(userJson);
-                            CurrentUser.Role = role == "Artist" ? "Artis" : "Collector";
+                            CurrentUser.Role = role == "Artist" ? "Artist" : "Collector";
                             ToMainAfterLogin();
                             return;
                         }
@@ -87,7 +87,7 @@ namespace RealArt
             foreach (string jsonLine in jsonLines)
             {
 
-                if (role == "Artist" || role == "Сollector")
+                if (role == "Artist" || role == "Collector")
                 {
                     Person? user = JsonSerializer.Deserialize<Person?>(jsonLine);
                     ;

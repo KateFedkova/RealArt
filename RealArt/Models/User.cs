@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RealArt.Models
 {
@@ -15,7 +14,7 @@ namespace RealArt.Models
         
         public string? About { get; set; }
 
-        public string? Photo { get; set; } = ConfigurationManager.AppSettings["ImageNotFound"];
+        public string? Photo { get; set; } = FileWorker.GetPathToImage();
 
         public List<Guid> Pictures { get; set; }
         

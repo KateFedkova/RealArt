@@ -113,7 +113,7 @@ namespace RealArt
                 {
                     Auction auction = new Auction(title, date, time, CurrentUser.Info.Username, photo);
                     AddAuctionToOwner(auction.Id);
-                    string? path = ConfigurationManager.AppSettings["PathToAuctionsData"];
+                    string? path = FileWorker.GetPath("Auctions");
                     FileWorker.AppendToFile(path, auction);
                 }
                 else
@@ -302,7 +302,7 @@ namespace RealArt
 
         private void DeleteAuctionPaintings()
         {
-            string? path = FileWorker.GetPath("Painitings");
+            string? path = FileWorker.GetPath("Paintings");
             string[] jsonLines = FileWorker.ReadFile("Paintings");
             List<Painting> paintings = new List<Painting>();
 

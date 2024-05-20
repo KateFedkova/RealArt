@@ -1,5 +1,4 @@
 ﻿using RealArt.Models;
-using System.Configuration;
 using System.Text.Json;
 
 namespace RealArt
@@ -232,13 +231,13 @@ namespace RealArt
         {
             Painting? painting = null;
 
-            if (CurrentUser.Role == "Artist")
+            if (CurrentUser.Role == "Artist" || CurrentUser.Role == "Collector")
             {
                 painting = new Painting(title, style, date, type, photo);
                 painting.ArtistName = CurrentUser.Info.Username;
             }
 
-            else if (CurrentUser.Role == "Collector" || CurrentUser.Role == "Organisation" || CurrentUser.Role == "Museum")
+            else if (CurrentUser.Role == "Organisation" || CurrentUser.Role == "Museum")
             {
                 painting = new Painting(title, style, date, type, price, photo);
 

@@ -68,7 +68,6 @@ namespace RealArt
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-
             if (InfoChanged())
             {
                 string role = CurrentUser.Role;
@@ -156,6 +155,7 @@ namespace RealArt
             organisation.About = AboutTextbox.Text;
             organisation.OpeningTime = OpeningTimePicker.Text;
             organisation.ClosingTime = ClosingTimePicker.Text;
+            organisation.Address = AddressTextbox.Text;
         }
     }
 }

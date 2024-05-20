@@ -14,6 +14,14 @@ namespace RealArt.Models
             string pathData = Path.Combine(projectRoot, data);
             return pathData; 
         }
+        public static string GetPathToImage()
+        {
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string projectRoot = Path.GetFullPath(Path.Combine(baseDirectory, @"..\..\.."));
+            string? data = ConfigurationManager.AppSettings["ImageNotFound"];
+            string pathData = Path.Combine(projectRoot, data);
+            return pathData;
+        }
 
         public static string[] ReadFile(string role)
         {
@@ -68,19 +76,16 @@ namespace RealArt.Models
 
         public static void AppendToFile(string file, object item)
         {
-            string? path = GetPath(file);
             string json = JsonSerializer.Serialize(item);
 
-            if (path != null)
+            if (file != null)
             {
-                File.AppendAllText(path, json + '\n');
+                File.AppendAllText(file, json + '\n');
             }
         }
 
-        public static void AppendToFilePaintings(string file, List<Painting> paintings)
+        public static void AppendToFilePaintings(string filePath, List<Painting> paintings)
         {
-            string filePath = GetPath(file);
-
             if (filePath != null)
             {
                 File.WriteAllText(filePath, string.Empty);

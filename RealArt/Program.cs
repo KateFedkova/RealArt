@@ -18,7 +18,7 @@ namespace RealArt
             string projectRoot = Path.GetFullPath(Path.Combine(baseDirectory, @"..\..\.."));
             
             string? artists = ConfigurationManager.AppSettings["PathToArtistsData"];
-            string? collectors = ConfigurationManager.AppSettings["PathTo—ollectorsData"];
+            string? collectors = ConfigurationManager.AppSettings["PathToCollectorsData"];
             string? museums = ConfigurationManager.AppSettings["PathToMuseumsData"];
             string? organisations = ConfigurationManager.AppSettings["PathToOrganisationsData"];
             string? paintings = ConfigurationManager.AppSettings["PathToPaintingsData"];

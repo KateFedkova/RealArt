@@ -130,6 +130,7 @@
             // 
             // CreationDate
             // 
+            CreationDate.Format = DateTimePickerFormat.Short;
             CreationDate.Location = new Point(373, 415);
             CreationDate.Name = "CreationDate";
             CreationDate.Size = new Size(300, 31);
