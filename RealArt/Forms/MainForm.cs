@@ -129,7 +129,7 @@ namespace RealArt
             int columnCount = 3;
 
             for (int i = 0; i < users.Count; i++)
-            { 
+            {
                 User user = users[i];
                 PictureBox pictureBox = CreatePictureBox(user);
                 pictureBox.Click += (sender, e) => OnPictureBoxClick(user);
@@ -183,7 +183,7 @@ namespace RealArt
             pictureBox.Margin = new Padding(20);
             return pictureBox;
         }
-     
+
         private void OnPictureBoxClick(object item)
         {
             if (item is Person person)
@@ -198,6 +198,11 @@ namespace RealArt
                 privatePage.Show();
                 this.Hide();
             }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
