@@ -152,7 +152,7 @@ namespace RealArt
             tableLayoutPanel.RowCount = 0;
             int columnCount = 3;
 
-            if (user is Organisation)
+            if (CurrentUser.Role == "Organisation")
             {
                 List<Auction> auctions = GetAuctions(user);
 
@@ -181,7 +181,6 @@ namespace RealArt
             else
             {
                 List<Painting> paintings = GetPictures(user);
-                MessageBox.Show(paintings.Count.ToString());
 
                 if (paintings.Count != 0)
                 {
