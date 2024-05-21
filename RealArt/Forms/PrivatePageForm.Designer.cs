@@ -339,6 +339,7 @@
             Name = "PrivatePageForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
+            FormClosing += PrivatePageForm_FormClosing;
             Load += PrivatePageForm_Load;
             Resize += PrivatePageForm_Resize;
             panel1.ResumeLayout(false);

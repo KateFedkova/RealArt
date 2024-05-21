@@ -9,15 +9,18 @@ namespace RealArt
 
         private User userInfo;
 
+        private bool exitApplication = true;
+
         public PrivatePageForm(MainForm main, User userInfo)
         {
             InitializeComponent();
             this.main = main;
-            this.userInfo = userInfo;   
+            this.userInfo = userInfo;
         }
 
         private void ToMain_Click(object sender, EventArgs e)
         {
+            exitApplication = false;
             this.Close();
             this.main.Show();
         }
@@ -269,7 +272,7 @@ namespace RealArt
         {
             string fileName = SetImage();
 
-            if (fileName != null)
+            if (fileName != "")
             {
                 string role = CurrentUser.Role;
                 CurrentUser.Info.Photo = fileName;
@@ -336,7 +339,7 @@ namespace RealArt
                 PrivatePageForm_Load(null, null);
             }
         }
-        
+
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             UpdateInfoForm updateInfoForm = new UpdateInfoForm();
@@ -356,6 +359,14 @@ namespace RealArt
             AuctionForm addAuctionForm = new AuctionForm(null);
             addAuctionForm.ShowDialog();
             PrivatePageForm_Load(null, null);
+        }
+
+        private void PrivatePageForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (exitApplication)
+            {
+                Application.Exit();
+            }
         }
     }
 }

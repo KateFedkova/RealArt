@@ -65,6 +65,8 @@ namespace RealArt
         private void UpdateUI()
         {
             itemsPanel.Visible = false;
+            QuoteLabel.Visible = true;
+            QuotePicturebox.Visible = true;
 
             if (CurrentUser.Info != null)
             {

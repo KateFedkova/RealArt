@@ -1,5 +1,4 @@
 ﻿using RealArt.Models;
-using System.Configuration;
 using System.Text.Json;
 
 namespace RealArt
@@ -265,6 +264,7 @@ namespace RealArt
             UploadButton.Visible = true;
             OkButton.Visible = true;
             AddPaintingButton.Visible = false;
+            ShowPaintingsButton.Visible = false;
             UpdateButton.Visible = false;
             TitleTextBox.ReadOnly = false;
             AuctionDate.Enabled = true;

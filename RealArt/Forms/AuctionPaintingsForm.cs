@@ -16,7 +16,7 @@ namespace RealArt
             this.userInfo = userInfo;
             this.auctionInfo = auctionInfo;
         }
-       
+
         private void AuctionPaintingsForm_Load(object sender, EventArgs e)
         {
             BindPictures(paintingsPanel, auctionInfo);

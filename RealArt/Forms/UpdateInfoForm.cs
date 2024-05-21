@@ -156,6 +156,6 @@ namespace RealArt
             organisation.OpeningTime = OpeningTimePicker.Text;
             organisation.ClosingTime = ClosingTimePicker.Text;
             organisation.Address = AddressTextbox.Text;
-        }
+        }   
     }
 }
