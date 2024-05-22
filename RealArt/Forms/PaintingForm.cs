@@ -20,7 +20,7 @@ namespace RealArt
         private void PaintingForm_Load(object sender, EventArgs e)
         {
 
-            if (userInfo != null && CurrentUser.Info.Id != userInfo.Id)
+            if (userInfo != null && (CurrentUser.Info == null || CurrentUser.Info.Id != userInfo.Id))
             {
                 UploadButton.Visible = false;
                 UpdateButton.Visible = false;
@@ -34,7 +34,13 @@ namespace RealArt
                 UploadButton.Visible = false;
                 OkButton.Visible = false;
 
-                if (CurrentUser.Info is Person)
+                if (CurrentUser.Info == null)
+                {
+                    OrganisationSetInfo(bindingSource, paintingInfo);
+                    MakeOrganisationReadonly();
+                }
+
+                else if (CurrentUser.Info is Person)
                 {
                     PersonElementsVisibility();
                     PersonSetInfo(bindingSource, paintingInfo);
@@ -400,7 +406,7 @@ namespace RealArt
 
                 if (auction?.Id == auctionInfo.Id)
                 {
-                    auction.Pictures.Add(paintingInfo.Id);
+                    auction.Pictures.Remove(paintingInfo.Id);
                 }
 
                 if (auction != null)

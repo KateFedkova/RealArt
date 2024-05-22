@@ -18,10 +18,20 @@ namespace RealArt
 
         private void AddAuctionForm_Load(object sender, EventArgs e)
         {
-            if (userInfo != null && CurrentUser.Info.Id != userInfo.Id)
+
+            if (userInfo != null && CurrentUser.Info == null)
             {
                 UploadButton.Visible = false;
-                ShowPaintingsButton.Visible = false;
+                AddPaintingButton.Visible = false;
+                DeleteButton.Visible = false;
+                UpdateButton.Visible = false;
+                OkButton.Visible = false;
+            }
+
+            if (userInfo != null && (CurrentUser.Info != null && CurrentUser.Info.Id != userInfo.Id))
+            {
+                UploadButton.Visible = false;
+                /*ShowPaintingsButton.Visible = false;*/
                 AddPaintingButton.Visible = false;
                 DeleteButton.Visible = false;
                 UpdateButton.Visible = false;
