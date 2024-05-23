@@ -14,7 +14,7 @@ namespace RealArt.Models
         
         public string? About { get; set; }
 
-        public string? Photo { get; set; } = FileWorker.GetPathToImage();
+        public string? Photo { get; set; } = "Images\\image-not-found.png";
 
         public List<Guid> Pictures { get; set; }
         
